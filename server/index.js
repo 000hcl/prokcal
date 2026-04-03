@@ -1,5 +1,14 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const config = require("./utils/config")
+
+const foodsRouter = require('./controllers/foods')
+
 const app = express()
+app.use(express.json())
+
+const mongoUrl = config.MONGODB_URI;
+mongoose.connect(mongoUrl, { family: 4 });
 
 const dummyData = [
   {
@@ -24,11 +33,13 @@ app.get('/', (request, response) => {
   response.send('dummy route')
 })
 
-app.get('/api/foods', (request, response) => {
+app.get('/dummy/foods', (request, response) => {
   response.json(dummyData)
 })
 
-const PORT = 3001
+app.use('/api/foods', foodsRouter)
+
+const PORT = config.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
