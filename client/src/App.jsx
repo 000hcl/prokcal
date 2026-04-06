@@ -1,4 +1,6 @@
 import AddFoodForm from "./components/AddFoodForm"
+import foodService from './services/foods'
+import { useState, useEffect } from "react"
 
 const dummyDataFoods = [
   {
@@ -34,10 +36,28 @@ const dummyDataTracking = [
 
 
 const App = () => {
+  const [foods, setFoods] = useState([])
+
+  useEffect(() => {
+    getFoods()
+  }, [])
+
+  const getFoods = async () => {
+    const dbFoods = await foodService.getAll()
+    setFoods(dbFoods)
+  }
+
+  const handleNewFood = async (newFood) => {
+    const savedFood = foodService.create(newFood)
+    setFoods(foods.concat(savedFood))
+
+  }
+
+
   return (
     <div>
       <h1>prokcal</h1>
-      <AddFoodForm/>
+      <AddFoodForm handleNewFood={handleNewFood}/>
     </div>
   )
 }
