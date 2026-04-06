@@ -48,7 +48,7 @@ const App = () => {
   }
 
   const handleNewFood = async (newFood) => {
-    const savedFood = foodService.create(newFood)
+    const savedFood = await foodService.create(newFood)
     setFoods(foods.concat(savedFood))
 
   }

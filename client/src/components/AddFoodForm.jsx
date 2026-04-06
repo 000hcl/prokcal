@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const AddFoodForm = () => {
+const AddFoodForm = ({ handleNewFood }) => {
   const [name, setName] = useState('')
   const [calories, setCalories] = useState('')
   const [carbs, setCarbs] = useState('')
@@ -12,14 +12,28 @@ const AddFoodForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setName('')
-    setCalories('')
-    setCarbs('')
-    setProtein('')
-    setFat('')
-    setFiber('')
-    console.log('testing');
-    
+    const newFood = {
+      name: name,
+      calories: calories,
+      carbohydrates: carbs,
+      protein: protein,
+      fats: fat,
+      fiber: fiber
+    }
+    try{
+      handleNewFood(newFood)
+      setName('')
+      setCalories('')
+      setCarbs('')
+      setProtein('')
+      setFat('')
+      setFiber('')
+      console.log('testing');
+    } catch (error) {
+      console.log(error);
+      
+    }
+
   }
 
 
