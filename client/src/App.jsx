@@ -1,3 +1,5 @@
+import AddFoodForm from "./components/AddFoodForm"
+
 const dummyDataFoods = [
   {
     id: '46873986573',
@@ -35,6 +37,7 @@ const App = () => {
   return (
     <div>
       <h1>prokcal</h1>
+      <AddFoodForm/>
     </div>
   )
 }
