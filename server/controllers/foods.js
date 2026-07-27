@@ -12,6 +12,7 @@ foodsRouter.post('/', async (request,response) => {
     console.log(request.body);
     
     //attach user? public/private?
+    //TODO: private
     const food = new Food({
         name: body.name,
         protein: body.protein,

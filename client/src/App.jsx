@@ -1,4 +1,6 @@
 import AddFoodForm from "./components/AddFoodForm"
+import RegisterForm from "./components/RegisterForm"
+import LoginForm from "./components/LoginForm"
 import foodService from './services/foods'
 import { useState, useEffect } from "react"
 
@@ -58,6 +60,8 @@ const App = () => {
   return (
     <div>
       <h1>prokcal</h1>
+      <RegisterForm />
+      <LoginForm />
       <AddFoodForm handleNewFood={handleNewFood}/>
     </div>
   )

@@ -4,4 +4,5 @@
 |3.4.2026| Backend+mongoose set up| 1 |
 |6.4.2026| Connect frontend + backend, add food form | 1 |
 |27.7.2026| Expand schema | 0.75 |
+| | User register/login basic functions | 1 |
 |  total |      |       |
