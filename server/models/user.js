@@ -20,6 +20,18 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Food'
     }
+  ],
+  goalHistory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Goal'
+    }
+  ],
+  intakeHistory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Intake'
+    }
   ]
 
 })
