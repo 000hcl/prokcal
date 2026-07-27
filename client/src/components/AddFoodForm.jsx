@@ -17,7 +17,7 @@ const AddFoodForm = ({ handleNewFood }) => {
       calories: calories,
       carbohydrates: carbs,
       protein: protein,
-      fats: fat,
+      fat: fat,
       fiber: fiber
     }
     try{

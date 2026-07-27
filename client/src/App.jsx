@@ -39,13 +39,14 @@ const App = () => {
   const [foods, setFoods] = useState([])
 
   useEffect(() => {
+    const getFoods = async () => {
+      const dbFoods = await foodService.getAll()
+      setFoods(dbFoods)
+    }
     getFoods()
   }, [])
 
-  const getFoods = async () => {
-    const dbFoods = await foodService.getAll()
-    setFoods(dbFoods)
-  }
+
 
   const handleNewFood = async (newFood) => {
     const savedFood = await foodService.create(newFood)

@@ -18,7 +18,7 @@ foodsRouter.post('/', async (request,response) => {
         carbohydrates: body.carbohydrates,
         calories: body.calories,
         fiber: body.fiber,
-        fats: body.fats
+        fat: body.fat
     })
 
     const savedFood = await food.save()
