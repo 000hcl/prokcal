@@ -5,4 +5,5 @@
 |6.4.2026| Connect frontend + backend, add food form | 1 |
 |27.7.2026| Expand schema | 0.75 |
 | | User register/login basic functions | 1 |
+|31.7.2026| User login/logout with context | 1 |
 |  total |      |       |

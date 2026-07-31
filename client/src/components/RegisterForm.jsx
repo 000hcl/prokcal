@@ -1,13 +1,20 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import userService from '../services/users'
+import UserContext from "../contexts/UserContext"
 
 const RegisterForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const {user} = useContext(UserContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (user) {
+      setUsername('USER EXISTS')
+      console.log(user)
+      return
+    }
     const newUserCredentials = {
       username,
       password,

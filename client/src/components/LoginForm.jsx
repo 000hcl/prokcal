@@ -1,21 +1,30 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import loginService from '../services/login'
+import UserContext from "../contexts/UserContext"
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const {user, login} = useContext(UserContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (user) {
+      return
+    }
     const credentials = {
       username,
       password,
     }
     try {
       //TODO: error handling
-      const result = await loginService.logIn(credentials)
-      console.log(result)
-      //TODO: set token in browser, etc
+
+      const user = await loginService.logIn(credentials)
+      window.localStorage.setItem(
+        'loggedProkcalUser', JSON.stringify(user)
+      )
+      login(user)
+      console.log(user)
     } catch (error) {
       console.log(error)
     }
