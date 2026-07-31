@@ -5,9 +5,11 @@ const config = require("./utils/config")
 const foodsRouter = require('./controllers/foods')
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
+const middleware = require('./utils/middleware')
 
 const app = express()
 app.use(express.json())
+app.use(middleware.tokenExtractor)
 
 const mongoUrl = config.MONGODB_URI;
 mongoose.connect(mongoUrl, { family: 4 });

@@ -1,4 +1,5 @@
 import { createContext, useState, useCallback } from 'react'
+import { setToken } from '../services/common'
 
 const UserContext = createContext()
 
@@ -9,6 +10,7 @@ export const UserContextProvider = ({ children }) => {
 
   const login = useCallback((userData) => {
     setUser(userData)
+    setToken(userData?.token)
   }, [])
 
   const logout = useCallback(() => {

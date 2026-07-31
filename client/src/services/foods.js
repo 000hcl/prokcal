@@ -1,13 +1,13 @@
-import axios from 'axios'
-const baseUrl = '/api/foods'
+import api from "./common"
+const baseUrl = '/foods'
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
+  const response = await api.get(baseUrl)
   return response.data
 }
 
 const create = async (newFood) => {
-  const response = await axios.post(baseUrl, newFood)
+  const response = await api.post(baseUrl, newFood)
 
   return response.data
 }

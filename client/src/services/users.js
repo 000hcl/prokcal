@@ -1,8 +1,8 @@
-import axios from 'axios'
-const baseUrl = '/api/users'
+import api from "./common"
+const baseUrl = '/users'
 
 const register = async (credentials) => {
-  const response = await axios.post(baseUrl, credentials)
+  const response = await api.post(baseUrl, credentials)
   return response.data
 }
 
