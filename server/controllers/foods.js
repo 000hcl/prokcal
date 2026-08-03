@@ -12,8 +12,7 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
     const body = request.body
     console.log(request.body)
     const user = request.user
-    
-    //TODO: private/public
+
     const food = new Food({
         name: body.name,
         protein: body.protein,
@@ -22,7 +21,8 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
         fiber: body.fiber,
         fat: body.fat,
         user: user._id,
-        private: body.private ? body.private : true
+        private: body.private ? body.private : true,
+        unit: body.unit
     })
 
     const savedFood = await food.save()

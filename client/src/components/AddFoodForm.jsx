@@ -20,7 +20,8 @@ const AddFoodForm = ({ handleNewFood }) => {
       protein: protein,
       fat: fat,
       fiber: fiber,
-      private: isPrivate
+      private: isPrivate,
+      unit: unit
     }
     try{
       handleNewFood(newFood)
