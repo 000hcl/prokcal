@@ -3,7 +3,7 @@ const Food = require('../models/food')
 const middleware = require('../utils/middleware')
 
 foodsRouter.get('/', async (request, response) => {
-    const foods = await Food.find({})
+    const foods = await Food.find({}).populate('user', { username: 1 })
     response.json(foods)
 })
 
@@ -21,7 +21,7 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
         fiber: body.fiber,
         fat: body.fat,
         user: user._id,
-        private: body.private ? body.private : true,
+        private: body.private,
         unit: body.unit
     })
 

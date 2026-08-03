@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm"
 import foodService from './services/foods'
 import { useState, useEffect, useContext } from "react"
 import UserContext from "./contexts/UserContext"
+import FoodList from "./components/FoodList"
 
 // const dummyDataFoods = [
 //   {
@@ -76,6 +77,7 @@ const App = () => {
       <RegisterForm />
       <LoginForm />
       <AddFoodForm handleNewFood={handleNewFood}/>
+      <FoodList foods={foods}/>
     </div>
   )
 }

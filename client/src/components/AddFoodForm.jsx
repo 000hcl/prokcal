@@ -2,11 +2,11 @@ import { useState } from 'react'
 
 const AddFoodForm = ({ handleNewFood }) => {
   const [name, setName] = useState('')
-  const [calories, setCalories] = useState('')
-  const [carbs, setCarbs] = useState('')
-  const [protein, setProtein] = useState('')
-  const [fat, setFat] = useState('')
-  const [fiber, setFiber] = useState('')
+  const [calories, setCalories] = useState('0')
+  const [carbs, setCarbs] = useState('0')
+  const [protein, setProtein] = useState('0')
+  const [fat, setFat] = useState('0')
+  const [fiber, setFiber] = useState('0')
   const [isPrivate, setPrivate] = useState(true)
   const [unit, setUnit] = useState('g')
 
@@ -51,31 +51,31 @@ const AddFoodForm = ({ handleNewFood }) => {
         <div>
           <label>
             kcal per 100 {unit}
-            <input type='text' value={calories} onChange={({ target }) => setCalories(target.value)}/>
+            <input type='text' value={calories} onChange={({ target }) => setCalories(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
           <label>
             carbohydrates per 100 {unit}
-            <input type='text' value={carbs} onChange={({ target }) => setCarbs(target.value)}/>
+            <input type='text' value={carbs} onChange={({ target }) => setCarbs(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
           <label>
             protein per 100 {unit}
-            <input type='text' value={protein} onChange={({ target }) => setProtein(target.value)}/>
+            <input type='text' value={protein} onChange={({ target }) => setProtein(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
           <label>
             fat per 100 {unit}
-            <input type='text' value={fat} onChange={({ target }) => setFat(target.value)}/>
+            <input type='text' value={fat} onChange={({ target }) => setFat(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
           <label>
             fiber per 100 {unit}
-            <input type='text' value={fiber} onChange={({ target }) => setFiber(target.value)}/>
+            <input type='text' value={fiber} onChange={({ target }) => setFiber(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
