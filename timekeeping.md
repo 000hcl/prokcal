@@ -7,4 +7,5 @@
 | | User register/login basic functions | 1 |
 |31.7.2026| User login/logout with context | 1 |
 | | backend user token verification | 1 |
+|3.8.2026| unit and privacy setting in food form | 0.5 |
 |  total |      |       |

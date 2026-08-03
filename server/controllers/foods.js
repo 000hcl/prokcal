@@ -21,7 +21,8 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
         calories: body.calories,
         fiber: body.fiber,
         fat: body.fat,
-        user: user._id
+        user: user._id,
+        private: body.private ? body.private : true
     })
 
     const savedFood = await food.save()

@@ -34,6 +34,12 @@ const foodSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true
+  },
+  unit: {
+    type: String,
+    enum: ['g', 'ml'],
+    required: true,
+    default: 'g'
   }
 })
 
