@@ -11,7 +11,7 @@ const presetSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Food'
       },
-      defaultGrams: {
+      defaultUnits: {
         type: Number,
         default: 0
       }
