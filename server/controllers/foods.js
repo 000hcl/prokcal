@@ -12,6 +12,10 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
     const body = request.body
     console.log(request.body)
     const user = request.user
+    if (!user) {
+        console.log('No user')
+        return response.status(401).json({ error: 'Not logged in'})
+    }
 
     const food = new Food({
         name: body.name,
