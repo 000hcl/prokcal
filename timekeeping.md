@@ -10,4 +10,5 @@
 |3.8.2026| unit and privacy setting in food form | 0.5 |
 | | food list component, tweaking food form | 0.5 |
 |19.8.2026| started preset form | 1 |
+|15.9.2026| continue working on preset form | 1 |
 |  total |      |       |
