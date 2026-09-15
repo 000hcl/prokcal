@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const AddFoodForm = ({ handleNewFood }) => {
+const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUnit }) => {
   const [name, setName] = useState('')
   const [calories, setCalories] = useState('0')
   const [carbs, setCarbs] = useState('0')
@@ -9,7 +9,6 @@ const AddFoodForm = ({ handleNewFood }) => {
   const [fiber, setFiber] = useState('0')
   const [isPrivate, setPrivate] = useState(true)
   const [unit, setUnit] = useState('g')
-
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -99,6 +98,13 @@ const AddFoodForm = ({ handleNewFood }) => {
             <input type='radio' value={'ml'} checked={unit === 'ml'} onChange={({ target }) => setUnit(target.value)}/>
           </label>
         </div>
+        {isPreset &&
+        <div>
+          <label>
+            default {unit}
+            <input type='text' value={defaultUnit} onChange={({ target }) => setDefaultUnit(target.value)} onFocus={(e) => e.target.select()}/>
+          </label>
+        </div>}
         <button type='submit'>Submit</button>
       </form>
     </div>

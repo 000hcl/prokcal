@@ -46,7 +46,7 @@ const App = () => {
       <LoginForm />
       <AddFoodForm handleNewFood={handleNewFood}/>
       
-      <AddPresetForm allFoods={foods} />
+      <AddPresetForm allFoods={foods} setAllFoods={setFoods} />
       <FoodList foods={foods}/>
     </div>
   )
