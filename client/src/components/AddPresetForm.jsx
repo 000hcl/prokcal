@@ -39,16 +39,25 @@ const AddPresetForm = ({ allFoods }) => {
         </div>
       </form>
       {foods.length >0 && <b>Added foods</b>}
-      {foods.map(f => <PresetListing presetFood={f}/>)}
+      {foods.map(f => <PresetListing presetFood={f} key={f.id}/>)}
       <form onSubmit={handleNewAddition}>
         <div>
           <label>
             Add new food
             <select
-              value={newAddition ? newAddition.name : ''}
-              onChange={e => setNewAddition(JSON.parse(e.target.value))}
+              value={newAddition?.id ?? ''}
+              onChange={e => {
+                const food = allFoods.find(f => String(f.id) === e.target.value)
+                setNewAddition(food ?? null)
+              }}
             >
-              {allFoods.map(f => <option key={f.id} value={JSON.stringify(f)}>{f.name}</option>)}
+              <option value=''>Select a food</option>
+
+              {allFoods.map(f => (
+                <option key={f.id} value={f.id}>
+                  {f.name}
+                </option>
+              ))}
             </select>
           </label>
         </div>
