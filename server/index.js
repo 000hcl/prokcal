@@ -5,6 +5,7 @@ const config = require("./utils/config")
 const foodsRouter = require('./controllers/foods')
 const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
+const presetRouter = require('./controllers/presets')
 const middleware = require('./utils/middleware')
 
 const app = express()
@@ -41,6 +42,7 @@ app.get('/dummy/foods', (request, response) => {
   response.json(dummyData)
 })
 
+app.use('/api/presets', presetRouter)
 app.use('/api/foods', foodsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)

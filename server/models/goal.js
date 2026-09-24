@@ -31,7 +31,7 @@ const goalSchema = new mongoose.Schema({
 
 })
 
-userSchema.set('toJSON', {
+goalSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id

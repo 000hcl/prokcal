@@ -29,7 +29,7 @@ const intakeSchema = new mongoose.Schema({
 
 })
 
-userSchema.set('toJSON', {
+intakeSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
