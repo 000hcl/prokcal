@@ -2,22 +2,37 @@ const mongoose = require('mongoose')
 
 const goalSchema = new mongoose.Schema({
   name: {
-      type: String
+    type: String
   },
   protein: {
-      type: Number
+    min: Number,
+    max: Number,
+    minEnabled: Boolean,
+    maxEnabled: Boolean
   },
   carbohydrates: {
-      type: Number
+    min: Number,
+    max: Number,
+    minEnabled: Boolean,
+    maxEnabled: Boolean
   },
   calories: {
-      type: Number
+    min: Number,
+    max: Number,
+    minEnabled: Boolean,
+    maxEnabled: Boolean
   },
   fiber: {
-      type: Number
+    min: Number,
+    max: Number,
+    minEnabled: Boolean,
+    maxEnabled: Boolean
   },
   fat: {
-      type: Number
+    min: Number,
+    max: Number,
+    minEnabled: Boolean,
+    maxEnabled: Boolean
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
