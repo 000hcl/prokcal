@@ -5,19 +5,41 @@ import foodService from '../services/foods'
 import presetService from '../services/presets'
 
 
-const PresetListing = ({presetFood, handleDelete}) => {
+const PresetListing = ({presetFood, handleDelete, handleEditDefault}) => {
+  const [editmode, setEditmode] = useState(false)
+  const [newDefault, setNewDefault] = useState(presetFood.defaultUnits)
+
+  const handleEdit = () => {
+    setEditmode(!editmode)
+    handleEditDefault(presetFood, newDefault)
+  }
+
+
   return (
     <div>
       <div>
         Food: {presetFood.name}
       </div>
+      {!editmode &&
       <div>
         Default units: {presetFood.defaultUnits}
-      </div>
+      </div>}
+      {editmode &&
+      <div>
+        <label>
+          Set new default measurement
+          <input type='text' value={newDefault} onChange={({ target }) => setNewDefault(target.value)}/>
+
+        </label>
+      </div>}
       <div>
         <button onClick={() => handleDelete(presetFood)}>X</button>
       </div>
+      <div>
+        <button onClick={handleEdit}>{editmode ? 'save' : 'edit'}</button>
+      </div>
     </div>
+    
   )
 }
 
@@ -74,6 +96,11 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
     setFoods(newFoods)
   }
 
+  const handleEditDefault = (foodToEdit, newUnits) => {
+    const newFoods = foods.map(f => f.id === foodToEdit.id ? {...f, defaultUnits: newUnits} : f)
+    setFoods(newFoods)
+  }
+
   const handleNewAddition = (event) => {
     event.preventDefault()
     setFoods(foods.concat({...newAddition, defaultUnits }))
@@ -120,7 +147,7 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
         </div>
         <div>
           {foods.length >0 && <b>Added foods</b>}
-          {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete}/>)}
+          {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
         </div>
         <button type='submit'>save preset</button>
       </form>
