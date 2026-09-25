@@ -35,10 +35,10 @@ const PresetListing = ({presetFood, handleDelete, handleEditDefault}) => {
         <input type='text' value={newDefault} onChange={({ target }) => setNewDefault(target.value)}/>
       </td>}
       <td>
-        <button onClick={handleEdit}>{editmode ? 'save' : 'edit'}</button>
+        <button type='button' onClick={handleEdit}>{editmode ? 'save' : 'edit'}</button>
       </td>
       <td>
-        <button onClick={() => handleDelete(presetFood)}>X</button>
+        <button type='button' onClick={() => handleDelete(presetFood)}>X</button>
       </td>
     </tr>
     
@@ -82,6 +82,27 @@ const AddExisting = ({ allFoods, newAddition, setNewAddition }) => {
         )}
       </div>
     </div>
+  )
+}
+
+const TotalMacrosRow = ({foods}) => {
+  const protein = foods ? foods.reduce((acc, f) => acc + f.protein*f.defaultUnits/100, 0) : 0
+  const carbohydrates = foods ? foods.reduce((acc, f) => acc + f.carbohydrates*f.defaultUnits/100, 0) : 0
+  const fiber = foods ? foods.reduce((acc, f) => acc + f.fiber*f.defaultUnits/100, 0) : 0
+  const fat = foods ? foods.reduce((acc, f) => acc + f.fat*f.defaultUnits/100, 0) : 0
+  const calories = foods ? foods.reduce((acc, f) => acc + f.calories*f.defaultUnits/100, 0) : 0
+
+  return (
+    <tr>
+      <td>total</td>
+      <td>{protein}</td>
+      <td>{carbohydrates}</td>
+      <td>{fiber}</td>
+      <td>{fat}</td>
+      <td>{calories}</td>
+      <td></td>
+      <td></td>
+    </tr>
   )
 }
 
@@ -150,15 +171,24 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
         <div>
           {foods.length >0 && <b>Added foods</b>}
           <table>
-            <th>food</th>
-            <th>protein</th>
-            <th>carbhohydrates</th>
-            <th>fiber</th>
-            <th>fat</th>
-            <th>kcal</th>
-            <th>unit</th>
-            <th>default g/ml</th>
-            {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
+            <thead>
+              <tr>
+                <th>food</th>
+                <th>protein</th>
+                <th>carbhohydrates</th>
+                <th>fiber</th>
+                <th>fat</th>
+                <th>kcal</th>
+                <th>unit</th>
+                <th>default g/ml</th>
+              </tr>
+            </thead>
+            <tbody>
+              {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
+            </tbody>
+            <tfoot>
+              <TotalMacrosRow foods={foods}/>
+            </tfoot>
           </table>
         </div>
         <button type='submit'>save preset</button>
