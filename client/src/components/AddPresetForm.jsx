@@ -4,7 +4,8 @@ import AddFoodForm from './AddFoodForm'
 import foodService from '../services/foods'
 import presetService from '../services/presets'
 
-const PresetListing = ({presetFood}) => {
+
+const PresetListing = ({presetFood, handleDelete}) => {
   return (
     <div>
       <div>
@@ -12,6 +13,9 @@ const PresetListing = ({presetFood}) => {
       </div>
       <div>
         Default units: {presetFood.defaultUnits}
+      </div>
+      <div>
+        <button onClick={() => handleDelete(presetFood)}>X</button>
       </div>
     </div>
   )
@@ -65,6 +69,11 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
   const [newFoodForm, setNewFoodForm] = useState(false)
   const [isPrivate, setPrivate] = useState(true)
 
+  const handleDelete = (foodToDelete) => {
+    const newFoods = foods.filter(f => f.id != foodToDelete.id)
+    setFoods(newFoods)
+  }
+
   const handleNewAddition = (event) => {
     event.preventDefault()
     setFoods(foods.concat({...newAddition, defaultUnits }))
@@ -111,7 +120,7 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
         </div>
         <div>
           {foods.length >0 && <b>Added foods</b>}
-          {foods.map(f => <PresetListing presetFood={f} key={f.id}/>)}
+          {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete}/>)}
         </div>
         <button type='submit'>save preset</button>
       </form>
