@@ -16,29 +16,31 @@ const PresetListing = ({presetFood, handleDelete, handleEditDefault}) => {
 
 
   return (
-    <div>
-      <div>
-        Food: {presetFood.name}
-      </div>
+    <tr>
+      <td>
+        {presetFood.name}
+      </td>
+      <td>{presetFood.protein * presetFood.defaultUnits / 100}</td>
+      <td>{presetFood.carbohydrates * presetFood.defaultUnits / 100}</td>
+      <td>{presetFood.fiber * presetFood.defaultUnits / 100}</td>
+      <td>{presetFood.fat * presetFood.defaultUnits / 100}</td>
+      <td>{presetFood.calories * presetFood.defaultUnits / 100}</td>
+      <td>{presetFood.unit}</td>
       {!editmode &&
-      <div>
-        Default units: {presetFood.defaultUnits}
-      </div>}
+      <td>
+        {presetFood.defaultUnits}
+      </td>}
       {editmode &&
-      <div>
-        <label>
-          Set new default measurement
-          <input type='text' value={newDefault} onChange={({ target }) => setNewDefault(target.value)}/>
-
-        </label>
-      </div>}
-      <div>
-        <button onClick={() => handleDelete(presetFood)}>X</button>
-      </div>
-      <div>
+      <td>
+        <input type='text' value={newDefault} onChange={({ target }) => setNewDefault(target.value)}/>
+      </td>}
+      <td>
         <button onClick={handleEdit}>{editmode ? 'save' : 'edit'}</button>
-      </div>
-    </div>
+      </td>
+      <td>
+        <button onClick={() => handleDelete(presetFood)}>X</button>
+      </td>
+    </tr>
     
   )
 }
@@ -147,7 +149,17 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
         </div>
         <div>
           {foods.length >0 && <b>Added foods</b>}
-          {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
+          <table>
+            <th>food</th>
+            <th>protein</th>
+            <th>carbhohydrates</th>
+            <th>fiber</th>
+            <th>fat</th>
+            <th>kcal</th>
+            <th>unit</th>
+            <th>default g/ml</th>
+            {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
+          </table>
         </div>
         <button type='submit'>save preset</button>
       </form>
