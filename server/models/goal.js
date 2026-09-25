@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const goalSchema = new mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   protein: {
     min: Number,
