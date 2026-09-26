@@ -14,4 +14,5 @@
 |24.9.2026| preset form work, backend and frontend | 1.5 |
 |25.9.2026| preset form frontend work | 1.5 | 
 | | begin goal form | 0.5 |
+|26.9.2026| complete goal form basic function | 1 |
 |  total |      |       |
