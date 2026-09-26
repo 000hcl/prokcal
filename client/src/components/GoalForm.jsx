@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const today = new Date().toISOString().substring(0,10)
+
 const GoalForm = () => {
   const [name, setName] = useState('')
   const [minCalories, setMinCalories] = useState('')
@@ -12,7 +14,7 @@ const GoalForm = () => {
   const [maxFat, setMaxFat] = useState('')
   const [minFiber, setMinFiber] = useState('')
   const [maxFiber, setMaxFiber] = useState('')
-  const [date, setDate] = useState(null)
+  const [date, setDate] = useState(today)
 
   const [enableMinCalories, setEnableMinCalories] = useState(false)
   const [enableMaxCalories, setEnableMaxCalories] = useState(false)
@@ -26,7 +28,8 @@ const GoalForm = () => {
   const [enableMaxFiber, setEnableMaxFiber] = useState(false)
 
 
-  //TODO: date input
+  
+
   return (
     <div>
       <h3>Create a new goal</h3>
@@ -145,9 +148,10 @@ const GoalForm = () => {
         <div>
           <label>
             Start date:
-            <input type='date' />
+            <input type='date' value={date} onChange={({ target }) => setDate(target.value)}/>
           </label>
         </div>
+        <button>Create Goal</button>
       </form>
     </div>
   )
