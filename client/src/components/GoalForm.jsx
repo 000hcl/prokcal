@@ -142,6 +142,12 @@ const GoalForm = () => {
 
           </label>
         </div>
+        <div>
+          <label>
+            Start date:
+            <input type='date' />
+          </label>
+        </div>
       </form>
     </div>
   )
