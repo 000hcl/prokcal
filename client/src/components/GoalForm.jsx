@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import goalService from '../services/goals'
 
 const today = new Date().toISOString().substring(0,10)
 
@@ -28,12 +29,73 @@ const GoalForm = () => {
   const [enableMaxFiber, setEnableMaxFiber] = useState(false)
 
 
-  //TODO handle submit
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const goal = {
+      name: name,
+      protein: {
+        max: maxProtein,
+        min: minProtein,
+        maxEnabled: enableMaxProtein,
+        minEnabled: enableMinProtein
+      },
+      carbohydrates: {
+        max: maxCarbs,
+        min: minCarbs,
+        maxEnabled: enableMaxCarbs,
+        minEnabled: enableMinCarbs
+      },
+      calories: {
+        max: maxCalories,
+        min: minCalories,
+        maxEnabled: enableMaxCalories,
+        minEnabled: enableMinCalories
+      },
+      fiber: {
+        max: maxFiber,
+        min: minFiber,
+        maxEnabled: enableMaxFiber,
+        minEnabled: enableMinFiber
+      },
+      fat: {
+        max: maxFat,
+        min: minFat,
+        maxEnabled: enableMaxFat,
+        minEnabled: enableMinFat
+      },
+      date: date
+    }
+    setName('')
+    setMinCalories('')
+    setMaxCalories('')
+    setMinCarbs('')
+    setMaxCarbs('')
+    setMinProtein('')
+    setMaxProtein('')
+    setMinFiber('')
+    setMaxFiber('')
+    setMinFat('')
+    setMaxFat('')
+
+    setEnableMaxCalories(false)
+    setEnableMinCalories(false)
+    setEnableMaxFat(false)
+    setEnableMinFat(false)
+    setEnableMaxFiber(false)
+    setEnableMinFiber(false)
+    setEnableMaxProtein(false)
+    setEnableMinProtein(false)
+    setEnableMaxCarbs(false)
+    setEnableMinCarbs(false)
+
+    const savedGoal = await goalService.create(goal)
+    console.log(savedGoal)
+  }
 
   return (
     <div>
       <h3>Create a new goal</h3>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>
             name
@@ -151,7 +213,7 @@ const GoalForm = () => {
             <input type='date' value={date} onChange={({ target }) => setDate(target.value)}/>
           </label>
         </div>
-        <button>Create Goal</button>
+        <button type='submit'>Create Goal</button>
       </form>
     </div>
   )

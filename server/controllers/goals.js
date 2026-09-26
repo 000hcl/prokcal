@@ -17,7 +17,7 @@ goalsRouter.post('/', middleware.userExtractor, async (request, response) => {
   }
 
   const goal = new Goal({
-    ...body, user: user._id
+    ...request.body, user: user._id
   })
 
   const savedGoal = await goal.save()
