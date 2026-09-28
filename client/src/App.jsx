@@ -7,6 +7,7 @@ import UserContext from "./contexts/UserContext"
 import FoodList from "./components/FoodList"
 import AddPresetForm from "./components/AddPresetForm"
 import GoalForm from "./components/GoalForm"
+import LogIntakeForm from "./components/LogIntakeForm"
 
 const App = () => {
   const [foods, setFoods] = useState([])
@@ -45,6 +46,9 @@ const App = () => {
       <button onClick={logout}>log out</button>
       <RegisterForm />
       <LoginForm />
+
+      <LogIntakeForm />
+
       <GoalForm />
       <AddFoodForm handleNewFood={handleNewFood}/>
       

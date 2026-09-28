@@ -4,6 +4,7 @@ import goalService from '../services/goals'
 const today = new Date().toISOString().substring(0,10)
 
 const GoalForm = () => {
+  //refactor to {min, max, boolean, boolean} type states
   const [name, setName] = useState('')
   const [minCalories, setMinCalories] = useState('')
   const [maxCalories, setMaxCalories] = useState('')
