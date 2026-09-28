@@ -2,6 +2,8 @@ import AddFoodForm from "./components/AddFoodForm"
 import RegisterForm from "./components/RegisterForm"
 import LoginForm from "./components/LoginForm"
 import foodService from './services/foods'
+import presetService from './services/presets'
+import goalService from './services/goals'
 import { useState, useEffect, useContext } from "react"
 import UserContext from "./contexts/UserContext"
 import FoodList from "./components/FoodList"
@@ -10,7 +12,11 @@ import GoalForm from "./components/GoalForm"
 import LogIntakeForm from "./components/LogIntakeForm"
 
 const App = () => {
+  //backend: only public or private resources belonging to the user
+  //this is currently a test page, TODO: different views
   const [foods, setFoods] = useState([])
+  const [presets, setPresets] = useState([])
+  const [goals, setGoals] = useState([])
   const { user, login, logout } = useContext(UserContext)
 
   useEffect(() => {
@@ -18,8 +24,18 @@ const App = () => {
       const dbFoods = await foodService.getAll()
       setFoods(dbFoods)
     }
+    const getPresets = async () => {
+      const dbPresets = await presetService.getAll()
+      setPresets(dbPresets)
+    }
+    const getGoals = async () => {
+      const dbGoals = await goalService.getAll()
+      setGoals(dbGoals)
+    }
 
     getFoods()
+    getPresets()
+    getGoals()
 
   }, [])
   useEffect(() => {
@@ -47,7 +63,7 @@ const App = () => {
       <RegisterForm />
       <LoginForm />
 
-      <LogIntakeForm />
+      <LogIntakeForm foods={foods} presets={presets} goals={goals}/>
 
       <GoalForm />
       <AddFoodForm handleNewFood={handleNewFood}/>
