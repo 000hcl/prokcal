@@ -15,4 +15,5 @@
 |25.9.2026| preset form frontend work | 1.5 | 
 | | begin goal form | 0.5 |
 |26.9.2026| complete goal form basic function | 1 |
+|28.9.2026| start making logging/intake form component | 0.67 |
 |  total |      |       |
