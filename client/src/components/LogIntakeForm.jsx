@@ -8,7 +8,7 @@ const today = new Date().toISOString().substring(0,10)
 
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
-  // preset selection
+  // preset selection: confirm adding, different preview?
   // shortcut/pop-up to new preset/ food form
   // how to handle multiple loggings in a day?
   // food preview

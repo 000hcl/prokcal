@@ -17,4 +17,5 @@
 |26.9.2026| complete goal form basic function | 1 |
 |28.9.2026| start making logging/intake form component | 0.67 |
 |29.9.2026| refactor: reusable components | 1 |
+| | work on intake logging form | 1.33 |
 |  total |      |       |
