@@ -1,18 +1,38 @@
 import { useState } from 'react'
+import Selector from './Selector'
+import SummaryTable from './SummaryTable'
 
 const today = new Date().toISOString().substring(0,10)
 
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
   // goal to attach
-  // food and preset selection
-  // statistics/summary display
+  // preset selection
   // shortcut/pop-up to new preset/ food form
   // how to handle multiple loggings in a day?
+  //food preview
   //TODO: component for food selector
 
   const [date, setDate] = useState(today)
+  //NewAddition is Food
   const [newAddition, setNewAddition] = useState(null)
+  const [loggedFoods, setLoggedFoods] = useState([])
+  const [amount, setAmount] = useState('')
+
+  const handleAddExistingFood = () => {
+    setLoggedFoods(loggedFoods.concat({...newAddition, units: Number(amount)}))
+    setNewAddition(null)
+    setAmount('')
+  }
+  const handleDelete = (foodToDelete) => {
+    const newFoods = loggedFoods.filter(f => f.id != foodToDelete.id)
+    setLoggedFoods(newFoods)
+  }
+
+  const handleEdit = (foodToEdit, newAmount) => {
+    const newFoods = loggedFoods.map(f => f.id === foodToEdit.id ? {...f, units: newAmount} : f)
+    setLoggedFoods(newFoods)
+  }
 
   return (
     <div>
@@ -25,25 +45,14 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           </label>
         </div>
         <div>
-          <label>
-            Add a food
-          <select
-            value={newAddition?.id ?? ''}
-            onChange={e => {
-              const food = foods.find(f => String(f.id) === e.target.value)
-              setNewAddition(food ?? null)
-            }}
-          >
-            <option value=''>Select a food</option>
-
-            {foods.map(f => (
-              <option key={f.id} value={f.id}>
-                {f.name}
-              </option>
-            ))}
-          </select>
-          </label>
-          <button type='button'>add to intake</button>
+          <SummaryTable isPresetForm={false} foods={loggedFoods} handleEditAmount={handleEdit} handleDelete={handleDelete}/>
+        </div>
+        <div>
+          <Selector itemList={foods} newAddition={newAddition} setNewAddition={setNewAddition} label={'Add existing food'} selectLabel={'Select food'}/>
+          <div>
+            <input type='text' value={amount} onChange={({ target }) => setAmount(target.value)}/> 
+          </div>
+          <button type='button' onClick={handleAddExistingFood}>add to intake</button>
         </div>
       </div>
     </div>

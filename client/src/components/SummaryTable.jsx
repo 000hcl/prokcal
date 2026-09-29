@@ -1,11 +1,15 @@
 import { useState } from 'react'
 
-const TotalMacrosRow = ({foods}) => {
-  const protein = foods ? foods.reduce((acc, f) => acc + f.protein*f.defaultUnits/100, 0) : 0
-  const carbohydrates = foods ? foods.reduce((acc, f) => acc + f.carbohydrates*f.defaultUnits/100, 0) : 0
-  const fiber = foods ? foods.reduce((acc, f) => acc + f.fiber*f.defaultUnits/100, 0) : 0
-  const fat = foods ? foods.reduce((acc, f) => acc + f.fat*f.defaultUnits/100, 0) : 0
-  const calories = foods ? foods.reduce((acc, f) => acc + f.calories*f.defaultUnits/100, 0) : 0
+const mapFoodUnit = (food, isDefault) => {
+  return isDefault ? food.defaultUnits : food.units
+}
+
+const TotalMacrosRow = ({foods, isPresetForm}) => {
+  const protein = foods ? foods.reduce((acc, f) => acc + f.protein*mapFoodUnit(f, isPresetForm)/100, 0) : 0
+  const carbohydrates = foods ? foods.reduce((acc, f) => acc + f.carbohydrates*mapFoodUnit(f, isPresetForm)/100, 0) : 0
+  const fiber = foods ? foods.reduce((acc, f) => acc + f.fiber*mapFoodUnit(f, isPresetForm)/100, 0) : 0
+  const fat = foods ? foods.reduce((acc, f) => acc + f.fat*mapFoodUnit(f, isPresetForm)/100, 0) : 0
+  const calories = foods ? foods.reduce((acc, f) => acc + f.calories*mapFoodUnit(f, isPresetForm)/100, 0) : 0
 
   return (
     <tr>
@@ -34,6 +38,7 @@ const Listing = ({food, handleDelete, handleEditAmount, isPresetForm}) => {
   const fiber = isPresetForm ? food.fiber * food.defaultUnits / 100 : food.fiber * food.units / 100
   const fat = isPresetForm ? food.fat * food.defaultUnits / 100 : food.fat * food.units / 100
   const calories = isPresetForm ? food.calories * food.defaultUnits / 100 : food.calories * food.units / 100
+  const units = isPresetForm ? food.defaultUnits : food.units
 
   return (
     <tr>
@@ -47,7 +52,7 @@ const Listing = ({food, handleDelete, handleEditAmount, isPresetForm}) => {
       <td>{calories} kcal</td>
       {!editmode &&
       <td>
-        {food.defaultUnits} {food.unit}
+        {units} {food.unit}
       </td>}
       {editmode &&
       <td>
@@ -87,7 +92,7 @@ const SummaryTable = ({ handleEditAmount, foods, handleDelete, isPresetForm }) =
             {foods.map(f => <Listing food={f} key={f.id} handleDelete={handleDelete} handleEditAmount={handleEditAmount} isPresetForm={isPresetForm}/>)}
           </tbody>
           <tfoot>
-            <TotalMacrosRow foods={foods}/>
+            <TotalMacrosRow foods={foods} isPresetForm={isPresetForm}/>
           </tfoot>
         </table>}
     </div>
