@@ -1,49 +1,10 @@
 import { useState } from 'react'
 import FoodListing from './FoodListing'
+import SummaryTable from './SummaryTable'
 import AddFoodForm from './AddFoodForm'
 import foodService from '../services/foods'
 import presetService from '../services/presets'
 
-
-const PresetListing = ({presetFood, handleDelete, handleEditDefault}) => {
-  const [editmode, setEditmode] = useState(false)
-  const [newDefault, setNewDefault] = useState(presetFood.defaultUnits)
-
-  const handleEdit = () => {
-    setEditmode(!editmode)
-    handleEditDefault(presetFood, newDefault)
-  }
-
-
-  return (
-    <tr>
-      <td>
-        {presetFood.name}
-      </td>
-      <td>{presetFood.protein * presetFood.defaultUnits / 100}</td>
-      <td>{presetFood.carbohydrates * presetFood.defaultUnits / 100}</td>
-      <td>{presetFood.fiber * presetFood.defaultUnits / 100}</td>
-      <td>{presetFood.fat * presetFood.defaultUnits / 100}</td>
-      <td>{presetFood.calories * presetFood.defaultUnits / 100}</td>
-      <td>{presetFood.unit}</td>
-      {!editmode &&
-      <td>
-        {presetFood.defaultUnits}
-      </td>}
-      {editmode &&
-      <td>
-        <input type='text' value={newDefault} onChange={({ target }) => setNewDefault(target.value)}/>
-      </td>}
-      <td>
-        <button type='button' onClick={handleEdit}>{editmode ? 'save' : 'edit'}</button>
-      </td>
-      <td>
-        <button type='button' onClick={() => handleDelete(presetFood)}>X</button>
-      </td>
-    </tr>
-    
-  )
-}
 
 const ToggleButton = ({newFoodForm, setNewFoodForm}) => {
   return (
@@ -85,26 +46,7 @@ const AddExisting = ({ allFoods, newAddition, setNewAddition }) => {
   )
 }
 
-const TotalMacrosRow = ({foods}) => {
-  const protein = foods ? foods.reduce((acc, f) => acc + f.protein*f.defaultUnits/100, 0) : 0
-  const carbohydrates = foods ? foods.reduce((acc, f) => acc + f.carbohydrates*f.defaultUnits/100, 0) : 0
-  const fiber = foods ? foods.reduce((acc, f) => acc + f.fiber*f.defaultUnits/100, 0) : 0
-  const fat = foods ? foods.reduce((acc, f) => acc + f.fat*f.defaultUnits/100, 0) : 0
-  const calories = foods ? foods.reduce((acc, f) => acc + f.calories*f.defaultUnits/100, 0) : 0
 
-  return (
-    <tr>
-      <td>total</td>
-      <td>{protein}</td>
-      <td>{carbohydrates}</td>
-      <td>{fiber}</td>
-      <td>{fat}</td>
-      <td>{calories}</td>
-      <td></td>
-      <td></td>
-    </tr>
-  )
-}
 
 const AddPresetForm = ({ allFoods, setAllFoods }) => {
   const [name, setName] = useState('')
@@ -169,27 +111,8 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
           </label>
         </div>
         <div>
-          {foods.length >0 && <b>Added foods</b>}
-          <table>
-            <thead>
-              <tr>
-                <th>food</th>
-                <th>protein</th>
-                <th>carbhohydrates</th>
-                <th>fiber</th>
-                <th>fat</th>
-                <th>kcal</th>
-                <th>unit</th>
-                <th>default g/ml</th>
-              </tr>
-            </thead>
-            <tbody>
-              {foods.map(f => <PresetListing presetFood={f} key={f.id} handleDelete={handleDelete} handleEditDefault={handleEditDefault}/>)}
-            </tbody>
-            <tfoot>
-              <TotalMacrosRow foods={foods}/>
-            </tfoot>
-          </table>
+          <SummaryTable isPresetForm={true} foods={foods} handleEditAmount={handleEditDefault} handleDelete={handleDelete}/>
+
         </div>
         <button type='submit'>save preset</button>
       </form>
