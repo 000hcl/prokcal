@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Selector from './Selector'
+import GoalPreview from './GoalPreview'
 import SummaryTable from './SummaryTable'
 
 const today = new Date().toISOString().substring(0,10)
@@ -50,6 +51,8 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           <label>
             Goal:
             <Selector itemList={goals} newAddition={goal} setNewAddition={setGoal} label={'Attach goal'} selectLabel={'Select goal'}/>
+            {goal &&
+            <GoalPreview goal={goal}/>}
           </label>
         </div>
         <div>
