@@ -18,6 +18,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
   const [newAddition, setNewAddition] = useState(null)
   const [loggedFoods, setLoggedFoods] = useState([])
   const [amount, setAmount] = useState('')
+  const [goal, setGoal] = useState(null)
 
   const handleAddExistingFood = () => {
     setLoggedFoods(loggedFoods.concat({...newAddition, units: Number(amount)}))
@@ -34,6 +35,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
     setLoggedFoods(newFoods)
   }
 
+
   return (
     <div>
       <h3>Log your intake</h3>
@@ -42,6 +44,12 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           <label>
             Date:
             <input type='date' value={date} onChange={({ target }) => setDate(target.value)}/>
+          </label>
+        </div>
+        <div>
+          <label>
+            Goal:
+            <Selector itemList={goals} newAddition={goal} setNewAddition={setGoal} label={'Attach goal'} selectLabel={'Select goal'}/>
           </label>
         </div>
         <div>
