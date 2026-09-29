@@ -2,6 +2,7 @@ import { useState } from 'react'
 import FoodListing from './FoodListing'
 import SummaryTable from './SummaryTable'
 import AddFoodForm from './AddFoodForm'
+import Selector from './Selector'
 import foodService from '../services/foods'
 import presetService from '../services/presets'
 
@@ -14,29 +15,12 @@ const ToggleButton = ({newFoodForm, setNewFoodForm}) => {
   )
 }
 
+//TODO: further refactoring?
 const AddExisting = ({ allFoods, newAddition, setNewAddition }) => {
   return (
     <div>
-      <div>
-        <label>
-          Add new food
-          <select
-            value={newAddition?.id ?? ''}
-            onChange={e => {
-              const food = allFoods.find(f => String(f.id) === e.target.value)
-              setNewAddition(food ?? null)
-            }}
-          >
-            <option value=''>Select a food</option>
+      <Selector itemList={allFoods} newAddition={newAddition} setNewAddition={setNewAddition} label={'Add existing food'} selectLabel={'Select food'}/>
 
-            {allFoods.map(f => (
-              <option key={f.id} value={f.id}>
-                {f.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
       <div>
         {newAddition && (
           <FoodListing food={newAddition}/>
@@ -45,8 +29,6 @@ const AddExisting = ({ allFoods, newAddition, setNewAddition }) => {
     </div>
   )
 }
-
-
 
 const AddPresetForm = ({ allFoods, setAllFoods }) => {
   const [name, setName] = useState('')
@@ -121,7 +103,6 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
         {!newFoodForm &&
           <div>
             <AddExisting allFoods={allFoods} newAddition={newAddition} setNewAddition={setNewAddition}/>
-          
             <div>
               <label>
                 default units
@@ -131,8 +112,6 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
             <button type='submit'>add food to preset</button>
           </div>
         }
-
-
       </form>
         {
           newFoodForm &&

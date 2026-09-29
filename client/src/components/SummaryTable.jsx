@@ -91,7 +91,6 @@ const SummaryTable = ({ handleEditAmount, foods, handleDelete, isPresetForm }) =
           </tfoot>
         </table>}
     </div>
-    
   )
 }
 
