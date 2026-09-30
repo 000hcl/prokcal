@@ -9,8 +9,8 @@ const today = new Date().toISOString().substring(0,10)
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
   // preset selection: confirm adding, different preview?
-    // preset preview!
     // handle adding!
+    // restore button?
   // shortcut/pop-up to new preset/ food form
   // how to handle multiple loggings in a day?
   // Currently only handles singular food additions
@@ -40,12 +40,12 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
   }
 
   const handleDeletePresetItem = (foodToDelete) => {
-    const newFoodList = newPresetAddition.foods.filter(f => f.id != foodToDelete.id)
+    const newFoodList = newPresetAddition.foods.filter(f => f.food.id != foodToDelete.id)
     setNewPresetAddition({...newPresetAddition, foods: newFoodList})
   }
 
   const handleEditPresetItem = (foodToEdit, newAmount) => {
-    const newFoodList = newPresetAddition.foods.map(f => f.id === foodToEdit.id ? {...f, defaultUnits: newAmount} : f)
+    const newFoodList = newPresetAddition.foods.map(f => f.food.id === foodToEdit.id ? {...f, defaultUnits: newAmount} : f)
     setNewPresetAddition({...newPresetAddition, foods: newFoodList})
   }
 
@@ -94,7 +94,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           />
           {
             newPresetAddition &&
-            <SummaryTable isPresetForm={true} foods={newPresetAddition.foods.map(pf => ({ ...pf.food, defaultUnits: pf.defaultUnits }))} handleDelete={handleDeletePresetItem} handleEdit={handleEditPresetItem} />
+            <SummaryTable isPresetForm={true} foods={newPresetAddition.foods.map(pf => ({ ...pf.food, defaultUnits: pf.defaultUnits }))} handleDelete={handleDeletePresetItem} handleEditAmount={handleEditPresetItem} />
           }
         </div>
       </div>
