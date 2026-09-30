@@ -9,7 +9,6 @@ const today = new Date().toISOString().substring(0,10)
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
   // preset selection: confirm adding, different preview?
-    // preset selector!
     // preset preview!
     // handle adding!
   // shortcut/pop-up to new preset/ food form
@@ -38,6 +37,16 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
   const handleEdit = (foodToEdit, newAmount) => {
     const newFoods = loggedFoods.map(f => f.id === foodToEdit.id ? {...f, units: newAmount} : f)
     setLoggedFoods(newFoods)
+  }
+
+  const handleDeletePresetItem = (foodToDelete) => {
+    const newFoodList = newPresetAddition.foods.filter(f => f.id != foodToDelete.id)
+    setNewPresetAddition({...newPresetAddition, foods: newFoodList})
+  }
+
+  const handleEditPresetItem = (foodToEdit, newAmount) => {
+    const newFoodList = newPresetAddition.foods.map(f => f.id === foodToEdit.id ? {...f, defaultUnits: newAmount} : f)
+    setNewPresetAddition({...newPresetAddition, foods: newFoodList})
   }
 
 
@@ -77,7 +86,16 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           <button type='button' onClick={handleAddExistingFood}>add to intake</button>
         </div>
         <div>
-          <Selector itemList={presets} newAddition={newPresetAddition} setNewAddition={setNewPresetAddition} label={'Add a preset group of foods'} selectLabel={'Select preset'}/>
+          <Selector itemList={presets}
+            newAddition={newPresetAddition}
+            setNewAddition={setNewPresetAddition}
+            label={'Add a preset group of foods'}
+            selectLabel={'Select preset'}
+          />
+          {
+            newPresetAddition &&
+            <SummaryTable isPresetForm={true} foods={newPresetAddition.foods} handleDelete={handleDeletePresetItem} handleEdit={handleEditPresetItem} />
+          }
         </div>
       </div>
     </div>
