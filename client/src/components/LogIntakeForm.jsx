@@ -94,7 +94,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           />
           {
             newPresetAddition &&
-            <SummaryTable isPresetForm={true} foods={newPresetAddition.foods} handleDelete={handleDeletePresetItem} handleEdit={handleEditPresetItem} />
+            <SummaryTable isPresetForm={true} foods={newPresetAddition.foods.map(pf => ({ ...pf.food, defaultUnits: pf.defaultUnits }))} handleDelete={handleDeletePresetItem} handleEdit={handleEditPresetItem} />
           }
         </div>
       </div>
