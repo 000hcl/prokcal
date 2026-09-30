@@ -9,15 +9,18 @@ const today = new Date().toISOString().substring(0,10)
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
   // preset selection: confirm adding, different preview?
+    // preset selector!
+    // preset preview!
+    // handle adding!
   // shortcut/pop-up to new preset/ food form
   // how to handle multiple loggings in a day?
-  // food preview
   // Currently only handles singular food additions
   //toggleable previews?
 
   const [date, setDate] = useState(today)
   //NewAddition is Food
   const [newAddition, setNewAddition] = useState(null)
+  const [newPresetAddition, setNewPresetAddition] = useState(null)
   const [loggedFoods, setLoggedFoods] = useState([])
   const [amount, setAmount] = useState('')
   const [goal, setGoal] = useState(null)
@@ -72,6 +75,9 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
             </label>
           </div>
           <button type='button' onClick={handleAddExistingFood}>add to intake</button>
+        </div>
+        <div>
+          <Selector itemList={presets} newAddition={newPresetAddition} setNewAddition={setNewPresetAddition} label={'Add a preset group of foods'} selectLabel={'Select preset'}/>
         </div>
       </div>
     </div>
