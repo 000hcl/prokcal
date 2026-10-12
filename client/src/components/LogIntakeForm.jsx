@@ -106,6 +106,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           }
           
         </div>
+        <button type='submit'>Submit intake</button>
       </div>
     </div>
   )
