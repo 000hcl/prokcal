@@ -19,4 +19,5 @@
 |29.9.2026| refactor: reusable components | 1 |
 | | work on intake logging form | 1.33 |
 |30.9.2026| work on intake logging form | 1 |
+|12.10.2026| add preset handling | |
 |  total |      |       |
