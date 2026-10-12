@@ -3,6 +3,7 @@ import Selector from './Selector'
 import GoalPreview from './GoalPreview'
 import FoodListing from './FoodListing'
 import SummaryTable from './SummaryTable'
+import IntakeService from '../services/intakes'
 
 const today = new Date().toISOString().substring(0,10)
 
@@ -54,11 +55,26 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
     setLoggedFoods(newFoods)
   }
 
+  const handleSubmitIntake = async (event) => {
+    //TODO: PUT when existing intake exists for date
+    event.preventDefault()
+    const foodsMapped = loggedFoods.map(f => ({food: f.id, units: f.units}))
+    const newIntake = {
+      foods: foodsMapped,
+      date: date,
+      goal: goal.id
+    }
+    const createdIntake = await IntakeService.create(newIntake)
+    console.log(createdIntake)
+    //empty fields here
+
+  }
+
 
   return (
     <div>
       <h3>Log your intake</h3>
-      <div>
+      <form onSubmit={handleSubmitIntake}>
         <div>
           <label>
             Date:
@@ -107,7 +123,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
           
         </div>
         <button type='submit'>Submit intake</button>
-      </div>
+      </form>
     </div>
   )
 }
