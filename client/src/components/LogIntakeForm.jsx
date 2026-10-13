@@ -9,11 +9,12 @@ const today = new Date().toISOString().substring(0,10)
 
 const LogIntakeForm = ({ goals, foods, presets }) => {
   //TODO:
-  // preset selection: confirm adding, different preview?
+  // preset selection: different preview?
     // restore button?
   // shortcut/pop-up to new preset/ food form
   // how to handle multiple loggings in a day?
   //toggleable previews?
+  //food preview comes with notification that food already exists?
 
   const [date, setDate] = useState(today)
   //NewAddition is Food
@@ -24,9 +25,19 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
   const [goal, setGoal] = useState(null)
 
   const handleAddExistingFood = () => {
-    setLoggedFoods(loggedFoods.concat({...newAddition, units: Number(amount)}))
-    setNewAddition(null)
-    setAmount('')
+    const existing = loggedFoods.find(f => f.id === newAddition.id)
+    if (existing) {
+      existing.units = Number(existing.units) + Number(amount)
+      const newLoggedFoods = loggedFoods.map(f => f.id === existing.id ? existing : f)
+      setLoggedFoods(newLoggedFoods)
+      setNewAddition(null)
+      setAmount('')
+    } else {
+      setLoggedFoods(loggedFoods.concat({...newAddition, units: Number(amount)}))
+      setNewAddition(null)
+      setAmount('')
+    }
+
   }
   const handleDelete = (foodToDelete) => {
     const newFoods = loggedFoods.filter(f => f.id != foodToDelete.id)
