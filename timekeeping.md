@@ -20,5 +20,5 @@
 | | work on intake logging form | 1.33 |
 |30.9.2026| work on intake logging form | 1 |
 |12.10.2026| work on intake logging form | 1 |
-|13.10.2026| | |
+|13.10.2026| work on intake logging form | 0.7 |
 |  total |      |       |
