@@ -62,8 +62,24 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
   const addPresetItems = () => {
     const foodsToMap = newPresetAddition.foods
     const foodsToConcat = foodsToMap.map(f => ({ ...f.food, units: f.defaultUnits }))
-    const newFoods = loggedFoods.concat(foodsToConcat)
+
+    let canConcat = []
+    let loggedFoodsCopy = loggedFoods
+
+    foodsToConcat.forEach(newFood => {
+      const existing = loggedFoods.find(f => f.id === newFood.id)
+      if (existing) {
+        const existingCopy = loggedFoodsCopy.find(f => f.id === newFood.id)
+        existingCopy.units = Number(newFood.units) + Number(existingCopy.units)
+      } else {
+        console.log('not existing')
+        canConcat = canConcat.concat(newFood)
+      }
+    })
+    const newFoods = loggedFoodsCopy.concat(canConcat)
     setLoggedFoods(newFoods)
+    setAmount('')
+    setNewPresetAddition(null)
   }
 
   const handleSubmitIntake = async (event) => {
