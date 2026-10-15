@@ -72,7 +72,7 @@ const App = () => {
       <RegisterForm />
       <LoginForm />
 
-      <LogIntakeForm foods={foods} presets={presets} goals={goals}/>
+      <LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>
 
       <GoalForm />
       <AddFoodForm handleNewFood={handleNewFood}/>

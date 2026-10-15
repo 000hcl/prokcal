@@ -7,7 +7,7 @@ import IntakeService from '../services/intakes'
 
 const today = new Date().toISOString().substring(0,10)
 
-const LogIntakeForm = ({ goals, foods, presets }) => {
+const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   //TODO:
   // preset selection: different preview?
     // restore button?
@@ -39,6 +39,20 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
     }
 
   }
+
+  const handleDateChange = ({ target }) => {
+    //should notify user if existing intake data exists for a date
+    setDate(target.value)
+    const dateAsISOString = new Date(target.value).toISOString()
+    const currentIntake = intakes.find(i => i.date === dateAsISOString)
+    console.log(dateAsISOString)
+    console.log(currentIntake, intakes)
+    if (currentIntake) {
+      const mappedFoods = currentIntake.foods.map(f => ({ ...f.food, units: f.units }))
+      setLoggedFoods(mappedFoods)
+    }
+  }
+
   const handleDelete = (foodToDelete) => {
     const newFoods = loggedFoods.filter(f => f.id != foodToDelete.id)
     setLoggedFoods(newFoods)
@@ -105,7 +119,7 @@ const LogIntakeForm = ({ goals, foods, presets }) => {
         <div>
           <label>
             Date:
-            <input type='date' value={date} onChange={({ target }) => setDate(target.value)}/>
+            <input type='date' value={date} onChange={handleDateChange}/>
           </label>
         </div>
         <div>
