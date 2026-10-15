@@ -12,4 +12,9 @@ const create = async (newIntake) => {
   return response.data
 }
 
-export default { getAll, create }
+const edit = async (intake) => {
+  const response = await api.put(`${baseUrl}/${intake.id}`, intake)
+  return response.data
+}
+
+export default { getAll, create, edit }

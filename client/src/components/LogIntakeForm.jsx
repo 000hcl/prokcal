@@ -24,6 +24,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   const [amount, setAmount] = useState('')
   const [goal, setGoal] = useState(null)
   const [editMode, setEditMode] = useState(false)
+  const [currentIntake, setCurrentIntake] = useState(null)
 
   const handleAddExistingFood = () => {
     const existing = loggedFoods.find(f => f.id === newAddition.id)
@@ -50,9 +51,11 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
     console.log(existingIntake, intakes)
     if (existingIntake) {
       setEditMode(true)
+      setCurrentIntake(existingIntake)
       const mappedFoods = existingIntake.foods.map(f => ({ ...f.food, units: f.units }))
       setLoggedFoods(mappedFoods)
     } else {
+      setCurrentIntake(null)
       setEditMode(false)
     }
   }
@@ -109,10 +112,18 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
       date: date,
       goal: goal.id
     }
-    const createdIntake = await IntakeService.create(newIntake)
-    console.log(createdIntake)
+    if (!editMode) {
+      const createdIntake = await IntakeService.create(newIntake)
+      console.log(createdIntake)
+      //further actions
+    } else {
+      const editedIntake = await IntakeService.edit({ ...newIntake, id: currentIntake.id})
+      console.log(editedIntake)
+      //further actions
+    }
+
     //empty fields here
-    //PUT: get id
+
 
   }
 
