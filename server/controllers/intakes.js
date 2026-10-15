@@ -2,8 +2,13 @@ const intakeRouter = require('express').Router()
 const Intake = require('../models/intake')
 const middleware = require('../utils/middleware')
 
-intakeRouter.get('/', async (request, response) => {
-  const intakes = await Intake.find({}).populate('user', {username: 1}).populate('foods.food')
+intakeRouter.get('/', middleware.userExtractor, async (request, response) => {
+  const user = request.user
+  if (!user) {
+    console.log('No user')
+    return response.status(401).json({ error: 'Not logged in'})
+  }
+  const intakes = await Intake.find({ user: user._id }).populate('user', {username: 1}).populate('foods.food')
   response.json(intakes)
 })
 

@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm"
 import foodService from './services/foods'
 import presetService from './services/presets'
 import goalService from './services/goals'
+import intakeService from './services/intakes'
 import { useState, useEffect, useContext } from "react"
 import UserContext from "./contexts/UserContext"
 import FoodList from "./components/FoodList"
@@ -17,6 +18,7 @@ const App = () => {
   const [foods, setFoods] = useState([])
   const [presets, setPresets] = useState([])
   const [goals, setGoals] = useState([])
+  const [intakes, setIntakes] = useState([])
   const { user, login, logout } = useContext(UserContext)
 
   useEffect(() => {
@@ -32,10 +34,17 @@ const App = () => {
       const dbGoals = await goalService.getAll()
       setGoals(dbGoals)
     }
+    const getIntakes = async () => {
+      //Unauthorized if not logged in
+      const dbIntakes = await intakeService.getAll()
+      console.log(dbIntakes)
+      setIntakes(dbIntakes)
+    }
 
     getFoods()
     getPresets()
     getGoals()
+    getIntakes()
 
   }, [])
   useEffect(() => {
