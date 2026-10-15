@@ -15,6 +15,7 @@ intakeRouter.get('/', middleware.userExtractor, async (request, response) => {
 intakeRouter.post('/', middleware.userExtractor, async (request, response) => {
   const body = request.body
   const user = request.user
+  //TODO: check if intake exists for date already.
   if (!user) {
     console.log('No user')
     return response.status(401).json({ error: 'Not logged in'})
