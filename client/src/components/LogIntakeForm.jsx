@@ -23,6 +23,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   const [loggedFoods, setLoggedFoods] = useState([])
   const [amount, setAmount] = useState('')
   const [goal, setGoal] = useState(null)
+  const [editMode, setEditMode] = useState(false)
 
   const handleAddExistingFood = () => {
     const existing = loggedFoods.find(f => f.id === newAddition.id)
@@ -44,12 +45,15 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
     //should notify user if existing intake data exists for a date
     setDate(target.value)
     const dateAsISOString = new Date(target.value).toISOString()
-    const currentIntake = intakes.find(i => i.date === dateAsISOString)
+    const existingIntake = intakes.find(i => i.date === dateAsISOString)
     console.log(dateAsISOString)
-    console.log(currentIntake, intakes)
-    if (currentIntake) {
-      const mappedFoods = currentIntake.foods.map(f => ({ ...f.food, units: f.units }))
+    console.log(existingIntake, intakes)
+    if (existingIntake) {
+      setEditMode(true)
+      const mappedFoods = existingIntake.foods.map(f => ({ ...f.food, units: f.units }))
       setLoggedFoods(mappedFoods)
+    } else {
+      setEditMode(false)
     }
   }
 
@@ -108,6 +112,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
     const createdIntake = await IntakeService.create(newIntake)
     console.log(createdIntake)
     //empty fields here
+    //PUT: get id
 
   }
 
