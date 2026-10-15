@@ -47,15 +47,19 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
     setDate(target.value)
     const dateAsISOString = new Date(target.value).toISOString()
     const existingIntake = intakes.find(i => i.date === dateAsISOString)
-    console.log(dateAsISOString)
-    console.log(existingIntake, intakes)
+    //console.log(dateAsISOString)
+    //console.log(existingIntake, intakes)
     if (existingIntake) {
+      //console.log(existingIntake)
       setEditMode(true)
+      setGoal(existingIntake.goal)
       setCurrentIntake(existingIntake)
       const mappedFoods = existingIntake.foods.map(f => ({ ...f.food, units: f.units }))
       setLoggedFoods(mappedFoods)
     } else {
       setCurrentIntake(null)
+      setLoggedFoods([])
+      setGoal(null)
       setEditMode(false)
     }
   }

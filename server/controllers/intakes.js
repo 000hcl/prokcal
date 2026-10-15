@@ -9,7 +9,7 @@ intakeRouter.get('/', middleware.userExtractor, async (request, response) => {
     console.log('No user')
     return response.status(401).json({ error: 'Not logged in'})
   }
-  const intakes = await Intake.find({ user: user._id }).populate('user', {username: 1}).populate('foods.food')
+  const intakes = await Intake.find({ user: user._id }).populate('user', {username: 1}).populate('foods.food').populate('goal')
   response.json(intakes)
 })
 
