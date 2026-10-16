@@ -7,7 +7,7 @@ const intakeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Food'
       },
-      units: {
+      amount: {
         type: Number,
         required: true
       }

@@ -34,7 +34,7 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
   const [name, setName] = useState('')
   const [foods, setFoods] = useState([])
   const [newAddition, setNewAddition] = useState(null)
-  const [defaultUnits, setDefaultUnits] = useState('')
+  const [defaultAmount, setDefaultAmount] = useState('')
   const [newFoodForm, setNewFoodForm] = useState(false)
   const [isPrivate, setPrivate] = useState(true)
 
@@ -43,34 +43,34 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
     setFoods(newFoods)
   }
 
-  const handleEditDefault = (foodToEdit, newUnits) => {
-    const newFoods = foods.map(f => f.id === foodToEdit.id ? {...f, defaultUnits: newUnits} : f)
+  const handleEditDefault = (foodToEdit, newAmount) => {
+    const newFoods = foods.map(f => f.id === foodToEdit.id ? {...f, defaultAmount: newAmount} : f)
     setFoods(newFoods)
   }
 
   const handleNewAddition = (event) => {
     event.preventDefault()
-    setFoods(foods.concat({...newAddition, defaultUnits }))
+    setFoods(foods.concat({...newAddition, defaultAmount }))
     setNewAddition(null)
-    setDefaultUnits('')
+    setDefaultAmount('')
   }
 
   const handleNewFood = async (newFood) => {
     const createdFood = await foodService.create(newFood)
     setAllFoods(allFoods.concat(createdFood))
-    setFoods(foods.concat({...createdFood, defaultUnits}))
-    setDefaultUnits('')
+    setFoods(foods.concat({...createdFood, defaultAmount}))
+    setDefaultAmount('')
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const foodsConcise = foods.map(f => ({food: f.id, defaultUnits: f.defaultUnits}))
+    const foodsConcise = foods.map(f => ({food: f.id, defaultAmount: f.defaultAmount}))
     const newPreset = { name, foods: foodsConcise, private: isPrivate }
     const savedPreset = await presetService.create(newPreset)
     setFoods([])
     setName('')
     setNewAddition(null)
-    setDefaultUnits('')
+    setDefaultAmount('')
     setPrivate(true)
     setNewFoodForm(false)
     console.log(savedPreset)
@@ -105,8 +105,8 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
             <AddExisting allFoods={allFoods} newAddition={newAddition} setNewAddition={setNewAddition}/>
             <div>
               <label>
-                default units
-                <input type='text' value={defaultUnits} onChange={({ target }) => setDefaultUnits(target.value)}/> 
+                default amount
+                <input type='text' value={defaultAmount} onChange={({ target }) => setDefaultAmount(target.value)}/> 
               </label>
             </div>
             <button type='submit'>add food to preset</button>
@@ -115,7 +115,7 @@ const AddPresetForm = ({ allFoods, setAllFoods }) => {
       </form>
         {
           newFoodForm &&
-          <AddFoodForm handleNewFood={handleNewFood} isPreset={true} defaultUnit={defaultUnits} setDefaultUnit={setDefaultUnits}/>
+          <AddFoodForm handleNewFood={handleNewFood} isPreset={true} defaultUnit={defaultAmount} setDefaultUnit={setDefaultAmount}/>
         }
     </div>
   )

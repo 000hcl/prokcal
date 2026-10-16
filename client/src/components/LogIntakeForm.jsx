@@ -29,13 +29,13 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   const handleAddExistingFood = () => {
     const existing = loggedFoods.find(f => f.id === newAddition.id)
     if (existing) {
-      existing.units = Number(existing.units) + Number(amount)
+      existing.amount = Number(existing.amount) + Number(amount)
       const newLoggedFoods = loggedFoods.map(f => f.id === existing.id ? existing : f)
       setLoggedFoods(newLoggedFoods)
       setNewAddition(null)
       setAmount('')
     } else {
-      setLoggedFoods(loggedFoods.concat({...newAddition, units: Number(amount)}))
+      setLoggedFoods(loggedFoods.concat({...newAddition, amount: Number(amount)}))
       setNewAddition(null)
       setAmount('')
     }
@@ -54,7 +54,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
       setEditMode(true)
       setGoal(existingIntake.goal)
       setCurrentIntake(existingIntake)
-      const mappedFoods = existingIntake.foods.map(f => ({ ...f.food, units: f.units }))
+      const mappedFoods = existingIntake.foods.map(f => ({ ...f.food, amount: f.amount }))
       setLoggedFoods(mappedFoods)
     } else {
       setCurrentIntake(null)
@@ -70,7 +70,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   }
 
   const handleEdit = (foodToEdit, newAmount) => {
-    const newFoods = loggedFoods.map(f => f.id === foodToEdit.id ? {...f, units: newAmount} : f)
+    const newFoods = loggedFoods.map(f => f.id === foodToEdit.id ? {...f, amount: newAmount} : f)
     setLoggedFoods(newFoods)
   }
 
@@ -80,13 +80,13 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   }
 
   const handleEditPresetItem = (foodToEdit, newAmount) => {
-    const newFoodList = newPresetAddition.foods.map(f => f.food.id === foodToEdit.id ? {...f, defaultUnits: newAmount} : f)
+    const newFoodList = newPresetAddition.foods.map(f => f.food.id === foodToEdit.id ? {...f, defaultAmount: newAmount} : f)
     setNewPresetAddition({...newPresetAddition, foods: newFoodList})
   }
 
   const addPresetItems = () => {
     const foodsToMap = newPresetAddition.foods
-    const foodsToConcat = foodsToMap.map(f => ({ ...f.food, units: f.defaultUnits }))
+    const foodsToConcat = foodsToMap.map(f => ({ ...f.food, amount: f.defaultAmount }))
 
     let canConcat = []
     let loggedFoodsCopy = loggedFoods
@@ -95,7 +95,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
       const existing = loggedFoods.find(f => f.id === newFood.id)
       if (existing) {
         const existingCopy = loggedFoodsCopy.find(f => f.id === newFood.id)
-        existingCopy.units = Number(newFood.units) + Number(existingCopy.units)
+        existingCopy.amount = Number(newFood.amount) + Number(existingCopy.amount)
       } else {
         console.log('not existing')
         canConcat = canConcat.concat(newFood)
@@ -110,7 +110,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
   const handleSubmitIntake = async (event) => {
     //TODO: PUT when existing intake exists for date
     event.preventDefault()
-    const foodsMapped = loggedFoods.map(f => ({food: f.id, units: f.units}))
+    const foodsMapped = loggedFoods.map(f => ({food: f.id, amount: f.amount}))
     const newIntake = {
       foods: foodsMapped,
       date: date,
@@ -177,7 +177,7 @@ const LogIntakeForm = ({ goals, foods, presets, intakes }) => {
           {
             newPresetAddition &&
             <>
-              <SummaryTable isPresetForm={true} foods={newPresetAddition.foods.map(pf => ({ ...pf.food, defaultUnits: pf.defaultUnits }))} handleDelete={handleDeletePresetItem} handleEditAmount={handleEditPresetItem} />
+              <SummaryTable isPresetForm={true} foods={newPresetAddition.foods.map(pf => ({ ...pf.food, defaultAmount: pf.defaultAmount }))} handleDelete={handleDeletePresetItem} handleEditAmount={handleEditPresetItem} />
               <button type='button' onClick={addPresetItems}>add items</button>
             </>
           }

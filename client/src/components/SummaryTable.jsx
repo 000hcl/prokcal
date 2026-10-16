@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const mapFoodUnit = (food, isDefault) => {
-  return isDefault ? food.defaultUnits : food.units
+  return isDefault ? food.defaultAmount : food.amount
 }
 
 const TotalMacrosRow = ({foods, isPresetForm}) => {
@@ -26,19 +26,19 @@ const TotalMacrosRow = ({foods, isPresetForm}) => {
 
 const Listing = ({food, handleDelete, handleEditAmount, isPresetForm}) => {
   const [editmode, setEditmode] = useState(false)
-  const [newAmount, setNewAmount] = useState(isPresetForm ? food.defaultUnits : food.units)
+  const [newAmount, setNewAmount] = useState(isPresetForm ? food.defaultAmount : food.amount)
 
   const handleEdit = () => {
     setEditmode(!editmode)
     handleEditAmount(food, newAmount)
   }
 
-  const protein = isPresetForm ? food.protein * food.defaultUnits / 100 : food.protein * food.units / 100
-  const carbohydrates = isPresetForm ? food.carbohydrates * food.defaultUnits / 100 : food.carbohydrates * food.units / 100
-  const fiber = isPresetForm ? food.fiber * food.defaultUnits / 100 : food.fiber * food.units / 100
-  const fat = isPresetForm ? food.fat * food.defaultUnits / 100 : food.fat * food.units / 100
-  const calories = isPresetForm ? food.calories * food.defaultUnits / 100 : food.calories * food.units / 100
-  const units = isPresetForm ? food.defaultUnits : food.units
+  const protein = isPresetForm ? food.protein * food.defaultAmount / 100 : food.protein * food.amount / 100
+  const carbohydrates = isPresetForm ? food.carbohydrates * food.defaultAmount / 100 : food.carbohydrates * food.amount / 100
+  const fiber = isPresetForm ? food.fiber * food.defaultAmount / 100 : food.fiber * food.amount / 100
+  const fat = isPresetForm ? food.fat * food.defaultAmount / 100 : food.fat * food.amount / 100
+  const calories = isPresetForm ? food.calories * food.defaultAmount / 100 : food.calories * food.amount / 100
+  const amount = isPresetForm ? food.defaultAmount : food.amount
 
   return (
     <tr>
@@ -52,7 +52,7 @@ const Listing = ({food, handleDelete, handleEditAmount, isPresetForm}) => {
       <td>{calories} kcal</td>
       {!editmode &&
       <td>
-        {units} {food.unit}
+        {amount} {food.unit}
       </td>}
       {editmode &&
       <td>
