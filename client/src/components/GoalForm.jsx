@@ -4,90 +4,29 @@ import goalService from '../services/goals'
 const today = new Date().toISOString().substring(0,10)
 
 const GoalForm = () => {
-  //refactor to {min, max, boolean, boolean} type states
   const [name, setName] = useState('')
-  const [minCalories, setMinCalories] = useState('')
-  const [maxCalories, setMaxCalories] = useState('')
-  const [minCarbs, setMinCarbs] = useState('')
-  const [maxCarbs, setMaxCarbs] = useState('')
-  const [minProtein, setMinProtein] = useState('')
-  const [maxProtein, setMaxProtein] = useState('')
-  const [minFat, setMinFat] = useState('')
-  const [maxFat, setMaxFat] = useState('')
-  const [minFiber, setMinFiber] = useState('')
-  const [maxFiber, setMaxFiber] = useState('')
+
   const [date, setDate] = useState(today)
 
-  const [enableMinCalories, setEnableMinCalories] = useState(false)
-  const [enableMaxCalories, setEnableMaxCalories] = useState(false)
-  const [enableMinCarbs, setEnableMinCarbs] = useState(false)
-  const [enableMaxCarbs, setEnableMaxCarbs] = useState(false)
-  const [enableMinProtein, setEnableMinProtein] = useState(false)
-  const [enableMaxProtein, setEnableMaxProtein] = useState(false)
-  const [enableMinFat, setEnableMinFat] = useState(false)
-  const [enableMaxFat, setEnableMaxFat] = useState(false)
-  const [enableMinFiber, setEnableMinFiber] = useState(false)
-  const [enableMaxFiber, setEnableMaxFiber] = useState(false)
+
+  const [calories, setCalories] = useState({min: '', max: '', minEnabled: false, maxEnabled: false})
+  const [carbohydrates, setCarbohydrates] = useState({min: '', max: '', minEnabled: false, maxEnabled: false})
+  const [protein, setProtein] = useState({min: '', max: '', minEnabled: false, maxEnabled: false})
+  const [fat, setFat] = useState({min: '', max: '', minEnabled: false, maxEnabled: false})
+  const [fiber, setFiber] = useState({min: '', max: '', minEnabled: false, maxEnabled: false})
 
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const goal = {
-      name: name,
-      protein: {
-        max: maxProtein,
-        min: minProtein,
-        maxEnabled: enableMaxProtein,
-        minEnabled: enableMinProtein
-      },
-      carbohydrates: {
-        max: maxCarbs,
-        min: minCarbs,
-        maxEnabled: enableMaxCarbs,
-        minEnabled: enableMinCarbs
-      },
-      calories: {
-        max: maxCalories,
-        min: minCalories,
-        maxEnabled: enableMaxCalories,
-        minEnabled: enableMinCalories
-      },
-      fiber: {
-        max: maxFiber,
-        min: minFiber,
-        maxEnabled: enableMaxFiber,
-        minEnabled: enableMinFiber
-      },
-      fat: {
-        max: maxFat,
-        min: minFat,
-        maxEnabled: enableMaxFat,
-        minEnabled: enableMinFat
-      },
-      date: date
-    }
-    setName('')
-    setMinCalories('')
-    setMaxCalories('')
-    setMinCarbs('')
-    setMaxCarbs('')
-    setMinProtein('')
-    setMaxProtein('')
-    setMinFiber('')
-    setMaxFiber('')
-    setMinFat('')
-    setMaxFat('')
+    const goal = { name, protein, carbohydrates, calories, fiber, fat, date }
 
-    setEnableMaxCalories(false)
-    setEnableMinCalories(false)
-    setEnableMaxFat(false)
-    setEnableMinFat(false)
-    setEnableMaxFiber(false)
-    setEnableMinFiber(false)
-    setEnableMaxProtein(false)
-    setEnableMinProtein(false)
-    setEnableMaxCarbs(false)
-    setEnableMinCarbs(false)
+
+    setName('')
+    setCalories({min: '', max: '', minEnabled: false, maxEnabled: false})
+    setCarbohydrates({min: '', max: '', minEnabled: false, maxEnabled: false})
+    setProtein({min: '', max: '', minEnabled: false, maxEnabled: false})
+    setFat({min: '', max: '', minEnabled: false, maxEnabled: false})
+    setFiber({min: '', max: '', minEnabled: false, maxEnabled: false})
 
     const savedGoal = await goalService.create(goal)
     console.log(savedGoal)
@@ -107,20 +46,20 @@ const GoalForm = () => {
         <div>
           <label>
             Minimum
-            {enableMinCalories &&
-              <input type='text' value={minCalories} onChange={({ target }) => setMinCalories(target.value)}/>
+            {calories.minEnabled &&
+              <input type='text' value={calories.min} onChange={({ target }) => setCalories({...calories, min: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMinCalories(!enableMinCalories)}>{enableMinCalories ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setCalories({...calories, minEnabled: !calories.minEnabled})}>{calories.minEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
         <div>
           <label>
             Maximum
-            {enableMaxCalories &&
-              <input type='text' value={maxCalories} onChange={({ target }) => setMaxCalories(target.value)}/>
+            {calories.maxEnabled &&
+              <input type='text' value={calories.max} onChange={({ target }) => setCalories({...calories, max: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMaxCalories(!enableMaxCalories)}>{enableMaxCalories ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setCalories({...calories, maxEnabled: !calories.maxEnabled})}>{calories.maxEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
@@ -128,20 +67,20 @@ const GoalForm = () => {
         <div>
           <label>
             Minimum
-            {enableMinCarbs &&
-              <input type='text' value={minCarbs} onChange={({ target }) => setMinCarbs(target.value)}/>
+            {carbohydrates.minEnabled &&
+              <input type='text' value={carbohydrates.min} onChange={({ target }) => setCarbohydrates({...carbohydrates, min: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMinCarbs(!enableMinCarbs)}>{enableMinCarbs ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setCarbohydrates({...carbohydrates, minEnabled: !carbohydrates.minEnabled})}>{carbohydrates.minEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
         <div>
           <label>
             Maximum
-            {enableMaxCarbs &&
-              <input type='text' value={maxCarbs} onChange={({ target }) => setMaxCarbs(target.value)}/>
+            {carbohydrates.maxEnabled &&
+              <input type='text' value={carbohydrates.max} onChange={({ target }) => setCarbohydrates({...carbohydrates, max: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMaxCarbs(!enableMaxCarbs)}>{enableMaxCarbs ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setCarbohydrates({...carbohydrates, maxEnabled: !carbohydrates.maxEnabled})}>{carbohydrates.maxEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
@@ -149,20 +88,20 @@ const GoalForm = () => {
         <div>
           <label>
             Minimum
-            {enableMinProtein &&
-              <input type='text' value={minProtein} onChange={({ target }) => setMinProtein(target.value)}/>
+            {protein.minEnabled &&
+              <input type='text' value={protein.min} onChange={({ target }) => setProtein({...protein, min: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMinProtein(!enableMinProtein)}>{enableMinProtein ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setProtein({...protein, minEnabled: !protein.minEnabled})}>{protein.minEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
         <div>
           <label>
             Maximum
-            {enableMaxProtein &&
-              <input type='text' value={maxProtein} onChange={({ target }) => setMaxProtein(target.value)}/>
+            {protein.maxEnabled &&
+              <input type='text' value={protein.max} onChange={({ target }) => setProtein({...protein, max: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMaxProtein(!enableMaxProtein)}>{enableMaxProtein ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setProtein({...protein, maxEnabled: !protein.maxEnabled})}>{protein.maxEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
@@ -170,20 +109,20 @@ const GoalForm = () => {
         <div>
           <label>
             Minimum
-            {enableMinFat &&
-              <input type='text' value={minFat} onChange={({ target }) => setMinFat(target.value)}/>
+            {fat.minEnabled &&
+              <input type='text' value={fat.min} onChange={({ target }) => setFat({...fat, min: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMinFat(!enableMinFat)}>{enableMinFat ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setFat({...fat, minEnabled: !fat.minEnabled})}>{fat.minEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
         <div>
           <label>
             Maximum
-            {enableMaxFat &&
-              <input type='text' value={maxFat} onChange={({ target }) => setMaxFat(target.value)}/>
+            {fat.maxEnabled &&
+              <input type='text' value={fat.max} onChange={({ target }) => setFat({...fat, max: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMaxFat(!enableMaxFat)}>{enableMaxFat ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setFat({...fat, maxEnabled: !fat.maxEnabled})}>{fat.maxEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
@@ -191,20 +130,20 @@ const GoalForm = () => {
         <div>
           <label>
             Minimum
-            {enableMinFiber &&
-              <input type='text' value={minFiber} onChange={({ target }) => setMinFiber(target.value)}/>
+            {fiber.minEnabled &&
+              <input type='text' value={fiber.min} onChange={({ target }) => setFiber({...fiber, min: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMinFiber(!enableMinFiber)}>{enableMinFiber ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setFiber({...fiber, minEnabled: !fiber.minEnabled})}>{fiber.minEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
         <div>
           <label>
             Maximum
-            {enableMaxFiber &&
-              <input type='text' value={maxFiber} onChange={({ target }) => setMaxFiber(target.value)}/>
+            {fiber.maxEnabled &&
+              <input type='text' value={fiber.max} onChange={({ target }) => setFiber({...fiber, max: target.value})}/>
             }
-            <button type='button' onClick={() => setEnableMaxFiber(!enableMaxFiber)}>{enableMaxFiber ? 'Do not track' : 'Track'}</button>
+            <button type='button' onClick={() => setFiber({...fiber, maxEnabled: !fiber.maxEnabled})}>{fiber.maxEnabled ? 'Do not track' : 'Track'}</button>
 
           </label>
         </div>
