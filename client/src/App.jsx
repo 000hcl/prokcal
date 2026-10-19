@@ -11,10 +11,13 @@ import FoodList from "./components/FoodList"
 import AddPresetForm from "./components/AddPresetForm"
 import GoalForm from "./components/GoalForm"
 import LogIntakeForm from "./components/LogIntakeForm"
+import Navigation from "./components/Navigation"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from "./components/Home"
+
 
 const App = () => {
   //backend: only public or private resources belonging to the user
-  //this is currently a test page, TODO: different views
   const [foods, setFoods] = useState([])
   const [presets, setPresets] = useState([])
   const [goals, setGoals] = useState([])
@@ -62,23 +65,26 @@ const App = () => {
 
   }
 
-
+  //TODO: handle goal and preset states here
 
   return (
     <div>
-      <h1>prokcal</h1>
-      <p>Welcome, {user?.username}</p>
-      <button onClick={logout}>log out</button>
-      <RegisterForm />
-      <LoginForm />
-
-      <LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>
-
-      <GoalForm />
-      <AddFoodForm handleNewFood={handleNewFood}/>
-      
-      <AddPresetForm allFoods={foods} setAllFoods={setFoods} />
-      <FoodList foods={foods}/>
+      <Router>
+        <h1>prokcal</h1>
+        <p>Welcome, {user?.username}</p>
+        <button onClick={logout}>log out</button>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<LoginForm />}/>
+          <Route path="/register" element={<RegisterForm />}/>
+          <Route path="/logintake" element={<LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>}/>
+          <Route path="/newgoal" element={<GoalForm />}/>
+          <Route path="/foods" element={<FoodList foods={foods}/>}/>
+          <Route path="/addfood" element={<AddFoodForm handleNewFood={handleNewFood}/>}/>
+          <Route path="/addpreset" element={<AddPresetForm allFoods={foods} setAllFoods={setFoods} />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
