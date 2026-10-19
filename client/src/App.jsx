@@ -15,6 +15,7 @@ import Navigation from "./components/Navigation"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import NotificationContext from './contexts/NotificationContext'
 import Home from "./components/Home"
+import Notification from "./components/Notification"
 
 
 const App = () => {
@@ -79,6 +80,7 @@ const App = () => {
         <button onClick={() => notify('button press')}>notification test button</button>
         <button onClick={removeNotification}>no more notification</button>
         <div>{notification}</div>
+        <Notification />
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<LoginForm />}/>
