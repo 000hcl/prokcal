@@ -13,6 +13,7 @@ import GoalForm from "./components/GoalForm"
 import LogIntakeForm from "./components/LogIntakeForm"
 import Navigation from "./components/Navigation"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import NotificationContext from './contexts/NotificationContext'
 import Home from "./components/Home"
 
 
@@ -23,6 +24,7 @@ const App = () => {
   const [goals, setGoals] = useState([])
   const [intakes, setIntakes] = useState([])
   const { user, login, logout } = useContext(UserContext)
+  const { notification, notify, removeNotification } = useContext(NotificationContext)
 
   useEffect(() => {
     const getFoods = async () => {
@@ -74,6 +76,9 @@ const App = () => {
         <p>Welcome, {user?.username}</p>
         <button onClick={logout}>log out</button>
         <Navigation />
+        <button onClick={() => notify('button press')}>notification test button</button>
+        <button onClick={removeNotification}>no more notification</button>
+        <div>{notification}</div>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<LoginForm />}/>
