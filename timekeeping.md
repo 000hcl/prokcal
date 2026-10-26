@@ -23,5 +23,6 @@
 |13.10.2026| work on intake logging form | 0.7 |
 |15.10.2026| work on intake logging form | 1.5 |
 |16.10.2026| refactoring | 1.5 |
-|19.19.2026| views and notification context | 1 |
+|19.10.2026| views and notification context | 1 |
+|26.10.2026|  |  |
 |  total |      |       |
