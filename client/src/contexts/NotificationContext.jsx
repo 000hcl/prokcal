@@ -8,6 +8,7 @@ export const NotificationContextProvider = ({ children }) => {
 
   const notify = useCallback((message) => {
     setNotification(message)
+    setTimeout(() => setNotification(null), 5000)
   }, [])
 
   const removeNotification = useCallback(() => {

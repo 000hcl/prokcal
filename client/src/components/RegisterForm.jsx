@@ -1,31 +1,34 @@
 import { useState, useContext } from "react"
 import userService from '../services/users'
 import UserContext from "../contexts/UserContext"
+import ErrorContext from "../contexts/ErrorContext"
 
 const RegisterForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const {user} = useContext(UserContext)
+  //remove error for 'x' button?
+  const { notifyError, removeError } = useContext(ErrorContext)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (user) {
-      setUsername('USER EXISTS')
-      console.log(user)
+      notifyError('You are already logged in')
       return
     }
-    const newUserCredentials = {
-      username,
-      password,
-      confirmPassword
-    }
+
     try {
-      //TODO: error handling
+      const newUserCredentials = {
+        username,
+        password,
+        confirmPassword
+      }
       const result = await userService.register(newUserCredentials)
       console.log(result)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      notifyError(error.response.data.error)
     }
   }
 

@@ -14,6 +14,7 @@ import LogIntakeForm from "./components/LogIntakeForm"
 import Navigation from "./components/Navigation"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import NotificationContext from './contexts/NotificationContext'
+import ErrorContext from "./contexts/ErrorContext"
 import Home from "./components/Home"
 import Notification from "./components/Notification"
 
@@ -26,6 +27,7 @@ const App = () => {
   const [intakes, setIntakes] = useState([])
   const { user, login, logout } = useContext(UserContext)
   const { notification, notify, removeNotification } = useContext(NotificationContext)
+  const { error, notifyError, removeError } = useContext(ErrorContext)
 
   useEffect(() => {
     const getFoods = async () => {
@@ -73,6 +75,7 @@ const App = () => {
   return (
     <div>
       <Router>
+        <b>{error}</b>
         <h1>prokcal</h1>
         <p>Welcome, {user?.username}</p>
         <button onClick={logout}>log out</button>
