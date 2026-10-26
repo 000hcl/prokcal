@@ -14,10 +14,25 @@ import GoalForm from "./components/GoalForm"
 import LogIntakeForm from "./components/LogIntakeForm"
 import Navigation from "./components/Navigation"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Navigate, Outlet } from "react-router-dom"
 import NotificationContext from './contexts/NotificationContext'
 import ErrorContext from "./contexts/ErrorContext"
 import Home from "./components/Home"
 import Notification from "./components/Notification"
+
+const GuestRoute = ({ user }) => {
+  if (user) {
+    return <Navigate to="/" replace />
+  }
+  return <Outlet />
+}
+
+const UserRoute = ({ user }) => {
+  if (!user) {
+    return <Navigate to="/login" replace />
+  }
+  return <Outlet />
+}
 
 
 const App = () => {
@@ -93,13 +108,17 @@ const App = () => {
         <Notification />
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<LoginForm />}/>
-          <Route path="/register" element={<RegisterForm existingUsers={users}/>}/>
-          <Route path="/logintake" element={<LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>}/>
-          <Route path="/newgoal" element={<GoalForm />}/>
+          <Route element={<GuestRoute user={user} />}>
+            <Route path="/login" element={<LoginForm />}/>
+            <Route path="/register" element={<RegisterForm existingUsers={users}/>}/>
+          </Route>
+          <Route element={<UserRoute user={user} />}>
+            <Route path="/logintake" element={<LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>}/>
+            <Route path="/newgoal" element={<GoalForm />}/>
+            <Route path="/addfood" element={<AddFoodForm handleNewFood={handleNewFood}/>}/>
+            <Route path="/addpreset" element={<AddPresetForm allFoods={foods} setAllFoods={setFoods} />} />
+          </Route>
           <Route path="/foods" element={<FoodList foods={foods}/>}/>
-          <Route path="/addfood" element={<AddFoodForm handleNewFood={handleNewFood}/>}/>
-          <Route path="/addpreset" element={<AddPresetForm allFoods={foods} setAllFoods={setFoods} />} />
         </Routes>
       </Router>
     </div>

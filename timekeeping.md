@@ -24,5 +24,6 @@
 |15.10.2026| work on intake logging form | 1.5 |
 |16.10.2026| refactoring | 1.5 |
 |19.10.2026| views and notification context | 1 |
-|26.10.2026|  |  |
+|26.10.2026| form validation (register form), error context | 1.6 |
+| | handling logged in user and guest routes redirects | 0.5 |
 |  total |      |       |

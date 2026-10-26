@@ -1,4 +1,5 @@
 import { useState, useContext } from "react"
+import { useNavigate } from "react-router"
 import userService from '../services/users'
 import UserContext from "../contexts/UserContext"
 import ErrorContext from "../contexts/ErrorContext"
@@ -17,11 +18,13 @@ const RegisterForm = ({existingUsers}) => {
   const { notifyError } = useContext(ErrorContext)
   const { notify } = useContext(NotificationContext)
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (user) {
       notifyError('You are already logged in')
-      return
+      return navigate('/')
     }
     //needed due to async
     let usernameErr = null
