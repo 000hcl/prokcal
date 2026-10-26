@@ -3,6 +3,7 @@ import RegisterForm from "./components/RegisterForm"
 import LoginForm from "./components/LoginForm"
 import foodService from './services/foods'
 import presetService from './services/presets'
+import userService from './services/users'
 import goalService from './services/goals'
 import intakeService from './services/intakes'
 import { useState, useEffect, useContext } from "react"
@@ -25,6 +26,7 @@ const App = () => {
   const [presets, setPresets] = useState([])
   const [goals, setGoals] = useState([])
   const [intakes, setIntakes] = useState([])
+  const [users, setUsers] = useState([])
   const { user, login, logout } = useContext(UserContext)
   const { notification, notify, removeNotification } = useContext(NotificationContext)
   const { error, notifyError, removeError } = useContext(ErrorContext)
@@ -42,6 +44,10 @@ const App = () => {
       const dbGoals = await goalService.getAll()
       setGoals(dbGoals)
     }
+    const getUsers = async () => {
+      const dbUsers = await userService.getAll()
+      setUsers(dbUsers.map(u => u.username))
+    }
     const getIntakes = async () => {
       //Unauthorized if not logged in
       const dbIntakes = await intakeService.getAll()
@@ -53,6 +59,7 @@ const App = () => {
     getPresets()
     getGoals()
     getIntakes()
+    getUsers()
 
   }, [])
   useEffect(() => {
@@ -87,7 +94,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<LoginForm />}/>
-          <Route path="/register" element={<RegisterForm />}/>
+          <Route path="/register" element={<RegisterForm existingUsers={users}/>}/>
           <Route path="/logintake" element={<LogIntakeForm foods={foods} presets={presets} goals={goals} intakes={intakes}/>}/>
           <Route path="/newgoal" element={<GoalForm />}/>
           <Route path="/foods" element={<FoodList foods={foods}/>}/>

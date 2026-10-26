@@ -6,4 +6,9 @@ const register = async (credentials) => {
   return response.data
 }
 
-export default { register }
+const getAll = async () => {
+  const response = await api.get(baseUrl)
+  return response.data
+}
+
+export default { register, getAll }
