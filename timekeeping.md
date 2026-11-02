@@ -26,4 +26,5 @@
 |19.10.2026| views and notification context | 1 |
 |26.10.2026| form validation (register form), error context | 1.6 |
 | | handling logged in user and guest routes redirects | 0.5 |
+|2.11.2026| | |
 |  total |      |       |
