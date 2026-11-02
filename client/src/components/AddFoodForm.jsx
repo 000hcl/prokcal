@@ -28,21 +28,9 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
       return `${inputName} cannot be negative.`
     }
     return null
-  } 
+  }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    const newFood = {
-      name: name,
-      calories: calories,
-      carbohydrates: carbs,
-      protein: protein,
-      fat: fat,
-      fiber: fiber,
-      private: isPrivate,
-      unit: unit
-    }
-    //needed due to async
+  const validate = () => {
     let nameErr = null
     let caloriesErr = null
     let carbsErr = null
@@ -67,11 +55,24 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
     setFatError(fatErr)
     setFiberError(fiberErr)
 
-    if (nameErr || caloriesErr || carbsErr || proteinErr || fatErr || fiberErr ) {
+    return !(nameErr || caloriesErr || carbsErr || proteinErr || fatErr || fiberErr);
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (!validate()) {
       return
     }
-
-
+    const newFood = {
+      name: name,
+      calories: calories,
+      carbohydrates: carbs,
+      protein: protein,
+      fat: fat,
+      fiber: fiber,
+      private: isPrivate,
+      unit: unit
+    }
 
     try{
       await handleNewFood(newFood)
