@@ -16,21 +16,25 @@ foodsRouter.post('/', middleware.userExtractor, async (request,response) => {
         console.log('No user')
         return response.status(401).json({ error: 'Not logged in'})
     }
+    try {
+        const food = new Food({
+            name: body.name,
+            protein: body.protein,
+            carbohydrates: body.carbohydrates,
+            calories: body.calories,
+            fiber: body.fiber,
+            fat: body.fat,
+            user: user._id,
+            private: body.private,
+            unit: body.unit
+        })
 
-    const food = new Food({
-        name: body.name,
-        protein: body.protein,
-        carbohydrates: body.carbohydrates,
-        calories: body.calories,
-        fiber: body.fiber,
-        fat: body.fat,
-        user: user._id,
-        private: body.private,
-        unit: body.unit
-    })
+        const savedFood = await food.save()
+        response.status(201).json(savedFood)
+    } catch (error) {
+        response.status(400).json({'error': error})
+    }
 
-    const savedFood = await food.save()
-    response.status(201).json(savedFood)
 })
 
 module.exports = foodsRouter

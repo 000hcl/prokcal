@@ -87,8 +87,13 @@ const App = () => {
 
 
   const handleNewFood = async (newFood) => {
-    const savedFood = await foodService.create(newFood)
-    setFoods(foods.concat(savedFood))
+    try {
+      const savedFood = await foodService.create(newFood)
+      setFoods(foods.concat(savedFood))
+    } catch (error) {
+      notifyError(error.response.data.error.message)
+    }
+
 
   }
 

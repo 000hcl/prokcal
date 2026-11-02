@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import ErrorContext from "../contexts/ErrorContext"
+
 
 const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUnit }) => {
   const [name, setName] = useState('')
@@ -9,6 +11,8 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
   const [fiber, setFiber] = useState('0')
   const [isPrivate, setPrivate] = useState(true)
   const [unit, setUnit] = useState('g')
+
+  const { notifyError } = useContext(ErrorContext)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -32,7 +36,8 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
       setFiber('')
       console.log('testing');
     } catch (error) {
-      console.log(error);
+      notifyError('Something went wrong')
+      console.log(error)
     }
 
   }
