@@ -21,6 +21,15 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
 
   const { notifyError } = useContext(ErrorContext)
 
+  const positiveNumber = (inputValue, inputName) => {
+    if (isNaN(inputValue)) {
+      return `${inputName} must be a number.`
+    } else if (inputValue < 0) {
+      return `${inputName} cannot be negative.`
+    }
+    return null
+  } 
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const newFood = {
@@ -45,35 +54,11 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
       nameErr = 'Name is required.'
     }
 
-    if (isNaN(calories)) {
-      caloriesErr = 'Calories must be a number.'
-    } else if (calories < 0) {
-      caloriesErr = 'Calories cannot be negative.'
-    }
-
-    if (isNaN(carbs)) {
-      carbsErr = 'Carbohydrates must be a number.'
-    } else if (carbs < 0) {
-      carbsErr = 'Carbohydrates cannot be negative.'
-    }
-
-    if (isNaN(protein)) {
-      proteinErr = 'Protein must be a number.'
-    } else if (protein < 0) {
-      proteinErr = 'Protein cannot be negative.'
-    }
-
-    if (isNaN(fat)) {
-      fatErr = 'Fat must be a number.'
-    } else if (fat < 0) {
-      fatErr = 'Fat cannot be negative.'
-    }
-
-    if (isNaN(fiber)) {
-      fiberErr = 'Fiber must be a number.'
-    } else if (fiber < 0) {
-      fiberErr = 'Fiber cannot be negative.'
-    }
+    caloriesErr = positiveNumber(calories, 'Calories')
+    carbsErr = positiveNumber(carbs, 'Carbohydrates')
+    proteinErr = positiveNumber(protein, 'Protein')
+    fatErr = positiveNumber(fat, 'Fat')
+    fiberErr = positiveNumber(fiber, 'Fiber')
 
     setNameError(nameErr)
     setCaloriesError(caloriesErr)
