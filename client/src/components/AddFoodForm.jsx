@@ -12,9 +12,16 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
   const [isPrivate, setPrivate] = useState(true)
   const [unit, setUnit] = useState('g')
 
+  const [nameError, setNameError] = useState(null)
+  const [caloriesError, setCaloriesError] = useState(null)
+  const [carbsError, setCarbsError] = useState(null)
+  const [proteinError, setProteinError] = useState(null)
+  const [fatError, setFatError] = useState(null)
+  const [fiberError, setFiberError] = useState(null)
+
   const { notifyError } = useContext(ErrorContext)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const newFood = {
       name: name,
@@ -26,14 +33,69 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
       private: isPrivate,
       unit: unit
     }
+    //needed due to async
+    let nameErr = null
+    let caloriesErr = null
+    let carbsErr = null
+    let proteinErr = null
+    let fatErr = null
+    let fiberErr = null
+
+    if (name.length === 0) {
+      nameErr = 'Name is required.'
+    }
+
+    if (isNaN(calories)) {
+      caloriesErr = 'Calories must be a number.'
+    } else if (calories < 0) {
+      caloriesErr = 'Calories cannot be negative.'
+    }
+
+    if (isNaN(carbs)) {
+      carbsErr = 'Carbohydrates must be a number.'
+    } else if (carbs < 0) {
+      carbsErr = 'Carbohydrates cannot be negative.'
+    }
+
+    if (isNaN(protein)) {
+      proteinErr = 'Protein must be a number.'
+    } else if (protein < 0) {
+      proteinErr = 'Protein cannot be negative.'
+    }
+
+    if (isNaN(fat)) {
+      fatErr = 'Fat must be a number.'
+    } else if (fat < 0) {
+      fatErr = 'Fat cannot be negative.'
+    }
+
+    if (isNaN(fiber)) {
+      fiberErr = 'Fiber must be a number.'
+    } else if (fiber < 0) {
+      fiberErr = 'Fiber cannot be negative.'
+    }
+
+    setNameError(nameErr)
+    setCaloriesError(caloriesErr)
+    setProteinError(proteinErr)
+    setCarbsError(carbsErr)
+    setFatError(fatErr)
+    setFiberError(fiberErr)
+
+    if (nameErr || caloriesErr || carbsErr || proteinErr || fatErr || fiberErr ) {
+      return
+    }
+
+
+
     try{
-      handleNewFood(newFood)
+      await handleNewFood(newFood)
       setName('')
-      setCalories('')
-      setCarbs('')
-      setProtein('')
-      setFat('')
-      setFiber('')
+      setCalories('0')
+      setCarbs('0')
+      setProtein('0')
+      setFat('0')
+      setFiber('0')
       console.log('testing');
     } catch (error) {
       notifyError('Something went wrong')
@@ -47,36 +109,54 @@ const AddFoodForm = ({ handleNewFood, isPreset=false, defaultUnit, setDefaultUni
       <h3>Add a new food</h3>
       <form onSubmit={handleSubmit}>
         <div>
+          <div>
+            { nameError }
+          </div>
           <label>
             name
             <input type='text' value={name} onChange={({ target }) => setName(target.value)}/>
           </label>
         </div>
         <div>
+          <div>
+            { caloriesError }
+          </div>
           <label>
             kcal per 100 {unit}
             <input type='text' value={calories} onChange={({ target }) => setCalories(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
+          <div>
+            { carbsError }
+          </div>
           <label>
             carbohydrates per 100 {unit}
             <input type='text' value={carbs} onChange={({ target }) => setCarbs(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
+          <div>
+            { proteinError }
+          </div>
           <label>
             protein per 100 {unit}
             <input type='text' value={protein} onChange={({ target }) => setProtein(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
+          <div>
+            { fatError }
+          </div>
           <label>
             fat per 100 {unit}
             <input type='text' value={fat} onChange={({ target }) => setFat(target.value)} onFocus={(e) => e.target.select()}/>
           </label>
         </div>
         <div>
+          <div>
+            { fiberError }
+          </div>
           <label>
             fiber per 100 {unit}
             <input type='text' value={fiber} onChange={({ target }) => setFiber(target.value)} onFocus={(e) => e.target.select()}/>
